@@ -14,9 +14,9 @@ This is the corresponding Repository to my project on Interactive Learning. It b
 --- 
 
 # Roadmap and ToDos:
-- [ ] Install necessary packages
-- [ ] Make a list of query strategies that modAL supports
-- [ ] Read up on modAL
+- [x] Install necessary packages
+- [x] Make a list of query strategies that modAL supports
+- [x] Read up on modAL
 - [ ] Look at [Logistic Regression on MNIST](https://github.com/michelucci/Logistic-Regression-Explained/blob/master/MNIST%20with%20Logistic%20Regression%20from%20scratch.ipynb)
 - [ ] Create shallow classifier on MNIST
   - [ ] Loss-function: Cross Entropy? mean_absolute_percentage_error? MSE?
@@ -30,6 +30,7 @@ This is the corresponding Repository to my project on Interactive Learning. It b
   - [ ] Percentage error
   - [ ] Maybe even compare to state of the art [from the Benchmark](https://paperswithcode.com/sota/image-classification-on-mnist?metric=Trainable%20Parameters)
   - [ ] Maybe Explainability
+- [ ] Check if all possible query strategies were used
 - [ ] Implement CNN and do the whole thing with a CNN instead of the shallow classifier
 - [ ] Rework citations
   - [ ] MNIST
