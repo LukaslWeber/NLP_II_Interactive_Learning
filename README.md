@@ -30,6 +30,8 @@ This is the corresponding Repository to my project on Interactive Learning. It b
   - [ ] Percentage error
   - [ ] Maybe even compare to state of the art [from the Benchmark](https://paperswithcode.com/sota/image-classification-on-mnist?metric=Trainable%20Parameters)
   - [ ] Maybe Explainability
+  - [ ] Graph which points (how to show this in a graph) were added, which points had the most impact
+  - [ ] Maybe: use TüPlots
 - [ ] Check if all possible query strategies were used
 - [ ] Implement CNN and do the whole thing with a CNN instead of the shallow classifier
 - [ ] Rework citations
