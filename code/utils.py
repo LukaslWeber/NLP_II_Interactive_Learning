@@ -50,32 +50,30 @@ def create_model(model_params, random_seed):
                               random_state=random_seed)
 
 
-def save_model_and_metrics(experiment:str, name: str, model, metrics: dict):
-    base_path = os.path.join("../models", f"exp{experiment}")
+def save_model_and_metrics(experiment:str, dataset_name:str, name: str, model, metrics: dict):
+    base_path = os.path.join("../results", dataset_name, f"exp{experiment}")
 
     # save model
-    with open(os.path.join(base_path, f"{name}_model.pkl"), 'wb') as file:
-        pickle.dump(model, file)
+    save_file(os.path.join(base_path, "models",  f"{name}_model.pkl"), model)
 
     # save metrics
-    save_dictionary(os.path.join(base_path, f"{name}_metrics.pkl"), metrics)
+    save_file(os.path.join(base_path, "metrics",  f"{name}_metrics.pkl"), metrics)
 
 
-def load_model_and_metrics(experiment:str, name: str):
-    base_path = os.path.join("../models", f"exp{experiment}")
+def load_model_and_metrics(experiment:str, dataset_name:str,  name: str):
+    base_path = os.path.join("../results", dataset_name, f"exp{experiment}")
 
-    with open(os.path.join(base_path, f"{name}_model.pkl"), 'rb') as file:
-        loaded_model = pickle.load(file)
+    loaded_model = load_file(os.path.join(base_path, "models", f"{name}_model.pkl"))
 
-    loaded_metrics = load_dictionary(os.path.join(base_path, f"{name}_metrics.pkl"))
+    loaded_metrics = load_file(os.path.join(base_path, "metrics", f"{name}_metrics.pkl"))
 
     return loaded_model, loaded_metrics
 
-def save_dictionary(path:str, dict):
+def save_file(path:str, dict):
     with open(path, 'wb') as file:
         pickle.dump(dict, file)
 
-def load_dictionary(path:str):
+def load_file(path:str):
     with open(path, 'rb') as file:
         loaded_dictionary = pickle.load(file)
 
