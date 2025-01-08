@@ -31,26 +31,27 @@ This is the corresponding Repository to my project on Interactive Learning. It b
     - [x] Ranked batch-mode samlping
     - [x] expected error reduction: binary and log loss (Roy and McCallum)
     - [x] Information density
-    - [ ] Steam-Based Sampling
+    - [X] Steam-Based Sampling
   - [x] Train on MNIST with part of the data (starting points for the query strategies)
-  - [ ] Use pretrained net and comprare how well finetuning with and without modAL works
-- [x] Set random number generators to always provude the same models
+- [x] Set random number generators to always provide the same models and pseudo-randomness
 - [ ] instead of random X_pool try stratified  sampling (e.g. X_initial, _, y_initial, _ = train_test_split(X_train, y_train, test_size=0.9, stratify=y_train, random_state=random_seed))
 - [ ] Shuffle Dataset maybe after each epoch?
 - [ ] Maybe: [use Committee based methods](https://modal-python.readthedocs.io/en/latest/content/models/Committee.html#query-strategies)
 - [ ] Cross-Validation verwenden um sicherzustellen dass es nicht an unterschiedlichen Random-splits am Dataset liegt?
 - [ ] Evaluation
-  - [ ] Accuracy
-  - [ ] Percentage error
-  - [ ] ROC Curve
-  - [ ] Precision, Recall, F1-Score: Useful if MNIST classes are imbalanced.
-  - [ ] Learning Curve: Plot accuracy against the number of training samples queried.
-  - [ ] Maybe even compare to state of the art [from the Benchmark](https://paperswithcode.com/sota/image-classification-on-mnist?metric=Trainable%20Parameters)
-  - [ ] Maybe Explainability
-  - [ ] Use confusion matrices for a class-wise error analysis.
+  - [x] Plot Accuracy
+  - [x] Per-Class-Accuracy
+  - [ ] Plot Per-Class-Accuracy
+  - [x] Plot train error
+  - [x] Plot test error
+  - [x] ROC Curve
+  - [x] Precision
+  - [x] Recall
+  - [x] F1-Score: Useful if MNIST classes are imbalanced.
+  - [x] Use confusion matrices for a class-wise error analysis.
   - [ ] Graph which points (how to show this in a graph) were added, which points had the most impact
-  - [ ] Maybe: use TüPlots
-- [ ] Check if all possible query strategies were used
+  - [x] use TüPlots
+- [x] Check if all possible query strategies were used
 - [ ] Implement CNN and do the whole thing with a CNN instead of the shallow classifier
 - [ ] Rework citations
   - [ ] MNIST
@@ -59,13 +60,6 @@ This is the corresponding Repository to my project on Interactive Learning. It b
 - [ ] [Display misclassified images](https://towardsdatascience.com/logistic-regression-using-python-sklearn-numpy-mnist-handwriting-recognition-matplotlib-a6b31e2b166a)
 
 
-- [ ] Disagreement Sampling (for classifiers) (für Committees gedacht)
-- [ ] Acquisition Functions sind vermutlich raus, weil sie einen BayesianOptimizer erfordern und nicht mit einem ActiveLearner funktionieren
-   - [ ] Probability of Improvement
-   - [ ] Expected Improvement
-   - [ ] Upper Confidence Bound
-
 ---
 
-# Questions to Stefano Teso:
-- Should I use a OneVsRestClassifier, i.e. should each class be treated as a binary classification problem?
+# Questions to Stefano:
