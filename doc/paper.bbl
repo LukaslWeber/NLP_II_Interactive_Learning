@@ -1,0 +1,34 @@
+\begin{thebibliography}{4}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Schröder et~al.(2022)Schröder, Niekler, and
+  Potthast]{revisitinguncertaintybasedquerystrategies}
+Schröder, C., Niekler, A., and Potthast, M.
+\newblock Revisiting uncertainty-based query strategies for active learning
+  with transformers, 2022.
+\newblock URL \url{https://arxiv.org/abs/2107.05687}.
+
+\bibitem[Ueno et~al.(2023)Ueno, Yamada, Nakatsuka, and
+  Kato]{benchmarkingofquerystrategies}
+Ueno, S., Yamada, Y., Nakatsuka, S., and Kato, K.
+\newblock Benchmarking of query strategies: Towards future deep active
+  learning, 2023.
+\newblock URL \url{https://arxiv.org/abs/2312.05751}.
+
+\bibitem[Werner et~al.(2023)Werner, Burchert, and
+  Schmidt-Thieme]{comparableactivelearning}
+Werner, T., Burchert, J., and Schmidt-Thieme, L.
+\newblock Towards comparable active learning, 2023.
+\newblock URL \url{https://arxiv.org/abs/2311.18356}.
+
+\bibitem[Zhan et~al.(2022)Zhan, Wang, hao Huang, Xiong, Dou, and
+  Chan]{comparativesurveydeepactive}
+Zhan, X., Wang, Q., hao Huang, K., Xiong, H., Dou, D., and Chan, A.~B.
+\newblock A comparative survey of deep active learning, 2022.
+\newblock URL \url{https://arxiv.org/abs/2203.13450}.
+
+\end{thebibliography}
