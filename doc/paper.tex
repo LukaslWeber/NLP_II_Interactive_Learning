@@ -133,33 +133,20 @@
 
 
 \section{Introduction}\label{sec:intro}
-Start with a broader context like: Active learning aims to minimize the labeling cost by selecting the most informative samples for annotation by an oracle. However, the choice of an appropriate query strategy significantly impacts the effectiveness of active learning.
-
-Motivation (Prolem i want to solve and why is the problem important)
-\begin{itemize}
-	\item Labelling expensive task
-	\item important to reduce labelled data requirement in machine learning to broaded to be able to use it in data sparse environments
-	\item role of  active learning in reducing annotation costs
-	\item significance of evaluating query strategies
-\end{itemize}
-Define Active Learning and why query strategies are important. FOCUS IS ON COMPARING STRATEGIES UNDER DIFFERENT DATASET SIZES AND MODEL COMPLEXITIES\\ 
-Objective
-\begin{itemize}
-	\item Compare different active learning strategies using the modAL framework
-\end{itemize}
-
-\textbf{Related Work: }What did the research do? prior comparisons of query strategies and highlight the gap that i am adressing
+Complex tasks in supervised learning usually require large annotated datasets. However, the cost and time needed to label samples can be high, especially when expert knowledge in the according field is required.  \\
+Active learning aims to reduce the overall labeling cost by selecting the most informative samples for annotation by an oracle and thus enable using machine learning for tasks where annotated data is sparse. \\
+The effectiveness of active learning relies heavily on the choice of query strategy, as it determines which samples are selected for annotation and thus directly influences model performance. In pool-based active learning, a model is trained on a small labeled dataset and used to evaluate a large pool of unlabeled data. Informative samples are selected based on a query strategy, labeled by an oracle, and added to the training set. The model is retrained, and the process is repeated until a stopping criterion is met. \\ 
+In stream-based active learning, unlabeled data arrives sequentially. Thus, the model decides whether to query the label of an incoming instance using an evaluation metric like the uncertainty of the prediction and checking whether a threshold is reached. If not, the instance is discarded. \\
+This report focuses on comparing several pool-based as well as stream-based query strategies. \\
+\textbf{Related Work:} Several previous works explore different query methods for several tasks. \cite{revisitinguncertaintybasedquerystrategies} compares various uncertainty based query strategies in the context of fine-tuning transformer models for text classification. 
 \begin{itemize}
 	\item Previous works have explored strategies such as ..., .., .... While they have been widely tested, most evaluations focus on  single dataset scenarios or specific models
 	\item Then the gaps: However, few studies analyze the impact of initial dataset size on query strategy performance, and even fewer investigate their behavior on simple versus complex models.
 \end{itemize}
 Previous papers:
 \begin{itemize}
-	\item \cite{revisitinguncertaintybasedquerystrategies} Compares various uncertainty based query strategies in context of fine-tuning transformer models for text classification. 
-	\\
-	Does not compare across different sizes of the pool, and for simple models.
-	\item \cite{benchmarkingofquerystrategies} TOWARDS FUTURE
-	DEEP ACTIVE LEARNING": Most papers concentrate on cifar or mnist, this paper evaluates six different datasets, including medical and visual inspection images. Also tackles the problem that experimental settings are not standardized, making evaluation of existing methods difficult. Also did a verification experiment where fully trained models are used to select most informative samples according to various query strategies and construct a labeled dataset. This is done to isolate and evaluate the effectiveness of query strategies indepently of training process/ underfitting or randomness due to early-stage training. 
+	\item \cite{revisitinguncertaintybasedquerystrategies}: Does not compare across different sizes of the pool, and for simple models.
+	\item \cite{benchmarkingofquerystrategies} Most papers concentrate on cifar or mnist, this paper evaluates six different datasets, including medical and visual inspection images. Also tackles the problem that experimental settings are not standardized, making evaluation of existing methods difficult. Also did a verification experiment where fully trained models are used to select most informative samples according to various query strategies and construct a labeled dataset. This is done to isolate and evaluate the effectiveness of query strategies indepently of training process/ underfitting or randomness due to early-stage training. 
 
 	\item \cite{comparativesurveydeepactive}: compares different query methods on mnist and cifar with a cnn (resnet18). Does not compare impact of different initial train set size and strategies on shallow classifiers.
 
@@ -218,6 +205,7 @@ Tool: modAL, scikit
 \section{Experiments}\label{sec:experiments}
 Setup: details for reproducibility (random number generators)?
 Random seed = 42
+\cite{comparableactivelearning} mention reproducibility problems in models even when setting random number generators before each run. By training models multiple times in succession and checking whether the same configurations lead to different outcomes, it is shown that in this scenario, reproducibility is guaranteed. \textcolor{red}{TODO: Schnell ein skript aufsetzen und dann finale accuracy und so weiter vergleichen.}
 \\
 Did I perform multiple runs?
 \\
