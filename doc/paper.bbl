@@ -1,32 +1,61 @@
-\begin{thebibliography}{4}
+\begin{thebibliography}{8}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
+\bibitem[Danka \& Horvath(2018)Danka and
+  Horvath]{danka_modalmodularactivelearning}
+Danka, T. and Horvath, P.
+\newblock modal: A modular active learning framework for python.
+\newblock 2018.
+\newblock URL \url{https://arxiv.org/abs/1805.00979}.
+
+\bibitem[Krizhevsky et~al.(2009)]{cifar}
+Krizhevsky, A. et~al.
+\newblock Learning multiple layers of features from tiny images.
+\newblock 2009.
+
+\bibitem[Lecun et~al.(1998)Lecun, Bottou, Bengio, and Haffner]{mnist}
+Lecun, Y., Bottou, L., Bengio, Y., and Haffner, P.
+\newblock Gradient-based learning applied to document recognition.
+\newblock \emph{Proceedings of the IEEE}, 86\penalty0 (11):\penalty0
+  2278--2324, 1998.
+\newblock \doi{10.1109/5.726791}.
+
+\bibitem[Pedregosa et~al.(2011)Pedregosa, Varoquaux, Gramfort, Michel, Thirion,
+  Grisel, Blondel, Prettenhofer, Weiss, Dubourg, Vanderplas, Passos,
+  Cournapeau, Brucher, Perrot, and Duchesnay]{scikit-learn}
+Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel,
+  O., Blondel, M., Prettenhofer, P., Weiss, R., Dubourg, V., Vanderplas, J.,
+  Passos, A., Cournapeau, D., Brucher, M., Perrot, M., and Duchesnay, E.
+\newblock Scikit-learn: Machine learning in {P}ython.
+\newblock \emph{Journal of Machine Learning Research}, 12:\penalty0 2825--2830,
+  2011.
+
 \bibitem[Schröder et~al.(2022)Schröder, Niekler, and
-  Potthast]{revisitinguncertaintybasedquerystrategies}
+  Potthast]{schröder_revisitinguncertaintybasedquerystrategies}
 Schröder, C., Niekler, A., and Potthast, M.
 \newblock Revisiting uncertainty-based query strategies for active learning
   with transformers, 2022.
 \newblock URL \url{https://arxiv.org/abs/2107.05687}.
 
 \bibitem[Ueno et~al.(2023)Ueno, Yamada, Nakatsuka, and
-  Kato]{benchmarkingofquerystrategies}
+  Kato]{ueno_benchmarkingofquerystrategies}
 Ueno, S., Yamada, Y., Nakatsuka, S., and Kato, K.
 \newblock Benchmarking of query strategies: Towards future deep active
   learning, 2023.
 \newblock URL \url{https://arxiv.org/abs/2312.05751}.
 
 \bibitem[Werner et~al.(2023)Werner, Burchert, and
-  Schmidt-Thieme]{comparableactivelearning}
+  Schmidt-Thieme]{werner_comparableactivelearning}
 Werner, T., Burchert, J., and Schmidt-Thieme, L.
 \newblock Towards comparable active learning, 2023.
 \newblock URL \url{https://arxiv.org/abs/2311.18356}.
 
 \bibitem[Zhan et~al.(2022)Zhan, Wang, hao Huang, Xiong, Dou, and
-  Chan]{comparativesurveydeepactive}
+  Chan]{zhan_comparativesurveydeepactive}
 Zhan, X., Wang, Q., hao Huang, K., Xiong, H., Dou, D., and Chan, A.~B.
 \newblock A comparative survey of deep active learning, 2022.
 \newblock URL \url{https://arxiv.org/abs/2203.13450}.

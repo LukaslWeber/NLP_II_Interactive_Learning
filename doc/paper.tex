@@ -137,44 +137,33 @@ Complex tasks in supervised learning usually require large annotated datasets. H
 Active learning aims to reduce the overall labeling cost by selecting the most informative samples for annotation by an oracle and thus enable using machine learning for tasks where annotated data is sparse. \\
 The effectiveness of active learning relies heavily on the choice of query strategy, as it determines which samples are selected for annotation and thus directly influences model performance. In pool-based active learning, a model is trained on a small labeled dataset and used to evaluate a large pool of unlabeled data. Informative samples are selected based on a query strategy, labeled by an oracle, and added to the training set. The model is retrained, and the process is repeated until a stopping criterion is met. \\ 
 In stream-based active learning, unlabeled data arrives sequentially. Thus, the model decides whether to query the label of an incoming instance using an evaluation metric like the uncertainty of the prediction and checking whether a threshold is reached. If not, the instance is discarded. \\
-This report focuses on comparing several pool-based as well as stream-based query strategies. \\
-\textbf{Related Work:} Several previous works explore different query methods for several tasks. \cite{revisitinguncertaintybasedquerystrategies} compares various uncertainty based query strategies in the context of fine-tuning transformer models for text classification. 
+This report focuses on comparing several pool-based as well as stream-based query strategies. The modular Active Learning framework (modAL)~\cite{danka_modalmodularactivelearning} is used in the following experiments as it simplified the implementation of active learning pipelines, contains multiple already implemented querying strategies and is compatible with models from the Scikit-learn library~\cite{scikit-learn}. \\
+Several previous works explore different query methods for different tasks. \\
+\cite{schröder_revisitinguncertaintybasedquerystrategies} compares various uncertainty based query strategies in the context of fine-tuning transformer models for text classification, while \cite{zhan_comparativesurveydeepactive} compares several query methods on MNIST and CIFAR. \\
+According to \cite{ueno_benchmarkingofquerystrategies} most papers concentrate on two image-based datasets: MNIST~\cite{mnist} and CIFAR~\cite{cifar}, while their paper evaluates strategies on six different datasets, including medical and visual inspection images. They also verify the effectiveness of query strategies independently of the training process, underfitting and randomness due to early-stage training in an experiment where fully trained models are used to select the most informative samples according to various query strategies and to construct a labeled dataset. \\ 
+\cite{werner_comparableactivelearning} agrees with their statement that experimental settings are not standardized across papers which makes comparisons of different existing and new query strategies difficult. They propose a benchmark framework evaluating active learning strategies on tabular, image, and text datasets using robust evaluation protocols to mitigate variance and ensure comparability. \\
+While \cite{ueno_benchmarkingofquerystrategies} evaluates strategies across several image-based datasets from a wide range of image-domains like the medical and visual inspection images, \cite{werner_comparableactivelearning} focuses on a wide range of data-domains including images, text and vector-based datasets. \\
+This report focuses on comparing strategies in the image domain. It compares query strategies for a simple logistic regression model and a more complex CNN to study the effect of model complexity on the optimal query strategy. \textcolor{red}{CITATION were able to show that [QUERY METHODS] work well on simple models but do not generalize well on more complex models. To guarantee real-world applicability, knowledge about this needs to be gained as model complexities vary across different tasks and datasets}. Furthermore, the impact of different sizes of the initial annotated dataset is additionally investigated which is something that few studies analyze in combination. The effect of the combination between model complexity and initial annotated dataset size is a research gap in previously mentioned papers. \\
+By examining different starting sizes, this work simulates various real-world scenarios: (1) starting with no labeled data, (2) having a small pool of labeled data, and (3) working with a well-trained model to identify data points for fine-tuning.
+% FROM HERE THIS IS NOT GOING TO BE PART OF THE FINAL PART
+Previous papers do not: Is everything here now mentioned previously? if yes, then it can be deleted.
 \begin{itemize}
-	\item Previous works have explored strategies such as ..., .., .... While they have been widely tested, most evaluations focus on  single dataset scenarios or specific models
-	\item Then the gaps: However, few studies analyze the impact of initial dataset size on query strategy performance, and even fewer investigate their behavior on simple versus complex models.
+	\item \cite{schröder_revisitinguncertaintybasedquerystrategies}: Does not compare across different sizes of the pool, and for simple models.
+	\item \cite{comparativesurveydeepactive}: Does not compare impact of different initial train set size and strategies on shallow classifiers.
+	
+	\item According to \cite{ueno_benchmarkingofquerystrategies}: \textcolor{red}{check if true:} Does not compare different sizes of the initial starting sets as well as how simple and more complex perform with the query methods
+	
+	\item \cite{werner_comparableactivelearning}: They focus on a wide range of domains, this paper only compares methods in the image domain. I compare strategies for a simple logistic regression model and a complex CNN across different starting sizes of the annotated dataset. \\
 \end{itemize}
-Previous papers:
+% TO HERE
+The contributions of this paper are as follows:
 \begin{itemize}
-	\item \cite{revisitinguncertaintybasedquerystrategies}: Does not compare across different sizes of the pool, and for simple models.
-	\item \cite{benchmarkingofquerystrategies} Most papers concentrate on cifar or mnist, this paper evaluates six different datasets, including medical and visual inspection images. Also tackles the problem that experimental settings are not standardized, making evaluation of existing methods difficult. Also did a verification experiment where fully trained models are used to select most informative samples according to various query strategies and construct a labeled dataset. This is done to isolate and evaluate the effectiveness of query strategies indepently of training process/ underfitting or randomness due to early-stage training. 
-
-	\item \cite{comparativesurveydeepactive}: compares different query methods on mnist and cifar with a cnn (resnet18). Does not compare impact of different initial train set size and strategies on shallow classifiers.
-
-
-	\item \cite{comparableactivelearning} highlight critical challenges in active learning research, including the lack of reproducible experiments and fair comparisons across domains. They propose a benchmark framework evaluating active learning strategies on tabular, image, and text datasets using robust evaluation protocols to mitigate variance and ensure comparability. While their work focuses on a wide range of domais, this paper only compares methods in the image domain. Furthermore, this paper focuses on the image domain. Specifically, it compares strategies for a simple logistic regression model and a CNN across different starting sizes of the annotated dataset. \\
-	By examining different starting sizes, this work simulates various real-world scenarios: (1) starting with no labeled data, (2) having a small pool of labeled data, and (3) working with a well-trained model to identify data points for fine-tuning.
-\end{itemize}
-
-\textbf{Modal}: description and relevance for research maybe? The modAL framework(ref) has simplified the implementation of active learning pipelines, yet its comparative use across different strategies remains underexplored.
-
-Prior studies
-\begin{itemize}
-	\item existing studies that compare active learning methods
-	\item do they have gaps in the literature? (maybe: comparison under different dataset sizes, use with cnns, comparison of simple or complicated models)
-\end{itemize}
-
-\textbf{Contributions}
-Comparative study of popular active learning query strategies using modAL framework. Contributions are as follows:
-\begin{itemize}
-	\item systemativ evaluation on two datasets: MNIST (Logistic Regression) and CIFAR (CNN)
-	\item analysis across different scenarios: small, moderate and large initial datasets
-	\item insight into performance impact of model complexity and initial dataset size on active learning performance
+	\item \textbf{Systematic evaluation of active learning query strategies} on MNIST with a logistic regression model and CIFAR-10 using a CNN to analyze their behavior across datasets and model complexities.
+	\item \textbf{Investigation of model complexity's influence} on the effectiveness of query strategies to provide knowledge into how shallow and deep models respond differently to active learning methods.
+	\item \textbf{Analysis of the initial labeled dataset size's impact} on the performance of query strategies to simulate real-world scenarios such as starting completely from scratch, having a small labeled dataset or fine-tuning a model.
 \end{itemize}
 
-\textbf{Structure of the paper}
-\begin{itemize}
-	\item outline paper
-\end{itemize}
+\textcolor{red}{Should I even give a structure of the paper?}
 
 \section{Methods}\label{sec:methods}
 \label{data_and_methods}
@@ -199,8 +188,6 @@ Comparative study of popular active learning query strategies using modAL framew
 \end{itemize}
 
 Metrics for evaluation (Accuracy, train error, confusion matrix, ...)
-
-Tool: modAL, scikit
 
 \section{Experiments}\label{sec:experiments}
 Setup: details for reproducibility (random number generators)?
