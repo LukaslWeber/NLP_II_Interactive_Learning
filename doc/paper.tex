@@ -143,19 +143,11 @@ Several previous works explore different query methods for different tasks. \\
 According to \cite{ueno_benchmarkingofquerystrategies} most papers concentrate on two image-based datasets: MNIST~\cite{mnist} and CIFAR~\cite{cifar}, while their paper evaluates strategies on six different datasets, including medical and visual inspection images. They also verify the effectiveness of query strategies independently of the training process, underfitting and randomness due to early-stage training in an experiment where fully trained models are used to select the most informative samples according to various query strategies and to construct a labeled dataset. \\ 
 \cite{werner_comparableactivelearning} agrees with their statement that experimental settings are not standardized across papers which makes comparisons of different existing and new query strategies difficult. They propose a benchmark framework evaluating active learning strategies on tabular, image, and text datasets using robust evaluation protocols to mitigate variance and ensure comparability. \\
 While \cite{ueno_benchmarkingofquerystrategies} evaluates strategies across several image-based datasets from a wide range of image-domains like the medical and visual inspection images, \cite{werner_comparableactivelearning} focuses on a wide range of data-domains including images, text and vector-based datasets. \\
-This report focuses on comparing strategies in the image domain. It compares query strategies for a simple logistic regression model and a more complex CNN to study the effect of model complexity on the optimal query strategy. \textcolor{red}{CITATION were able to show that [QUERY METHODS] work well on simple models but do not generalize well on more complex models. To guarantee real-world applicability, knowledge about this needs to be gained as model complexities vary across different tasks and datasets}. Furthermore, the impact of different sizes of the initial annotated dataset is additionally investigated which is something that few studies analyze in combination. The effect of the combination between model complexity and initial annotated dataset size is a research gap in previously mentioned papers. \\
+This report focuses on comparing strategies in the image domain. It compares query strategies for a simple logistic regression model and a more complex CNN to study the effect of model complexity on the optimal query strategy. \\
+It is uncertain whether query strategies which work well on simple models generalize well to more complex models like Neural Networks~\cite{schröder_surveyactivelearningtext}. To guarantee real-world applicability, knowledge about this needs to be gained as model complexities vary across different tasks and datasets. Furthermore, the impact of different sizes of the initial annotated dataset is additionally investigated which is something that few studies analyze in combination. The effect of the combination between model complexity and initial annotated dataset size is a gap not researched in previously mentioned papers. \\
 By examining different starting sizes, this work simulates various real-world scenarios: (1) starting with no labeled data, (2) having a small pool of labeled data, and (3) working with a well-trained model to identify data points for fine-tuning.
-% FROM HERE THIS IS NOT GOING TO BE PART OF THE FINAL PART
-Previous papers do not: Is everything here now mentioned previously? if yes, then it can be deleted.
-\begin{itemize}
-	\item \cite{schröder_revisitinguncertaintybasedquerystrategies}: Does not compare across different sizes of the pool, and for simple models.
-	\item \cite{comparativesurveydeepactive}: Does not compare impact of different initial train set size and strategies on shallow classifiers.
-	
-	\item According to \cite{ueno_benchmarkingofquerystrategies}: \textcolor{red}{check if true:} Does not compare different sizes of the initial starting sets as well as how simple and more complex perform with the query methods
-	
-	\item \cite{werner_comparableactivelearning}: They focus on a wide range of domains, this paper only compares methods in the image domain. I compare strategies for a simple logistic regression model and a complex CNN across different starting sizes of the annotated dataset. \\
-\end{itemize}
-% TO HERE
+\\
+\\
 The contributions of this paper are as follows:
 \begin{itemize}
 	\item \textbf{Systematic evaluation of active learning query strategies} on MNIST with a logistic regression model and CIFAR-10 using a CNN to analyze their behavior across datasets and model complexities.
@@ -222,15 +214,31 @@ Implications: practical recommendations?
 \\
 Future work? (More diverse datasets, exploring additional strategies, applying in real-world tasks)
 
+\newpage
+
 \section{Cool ideas}
 \begin{itemize}
 	\item Show the typical framework of active learning in a figure in the introduction
+	\item Accuracy vs. fraction of data size in relation to the datset (percentage of used data points)
 \end{itemize}
 
 \section{Good formulations}
 From the active learning survey: Entropy is an information-theoretic
 measure that represents the amount of information needed to “encode” a distri-
 bution. As such, it is often thought of as a measure of uncertainty or impurity in machine learning.
+
+\section{Comparison to the other papers}
+% FROM HERE THIS IS NOT GOING TO BE PART OF THE FINAL PART
+Previous papers do not: Is everything here now mentioned previously? if yes, then it can be deleted.
+\begin{itemize}
+	\item \cite{schröder_revisitinguncertaintybasedquerystrategies}: Does not compare across different sizes of the pool, and for simple models.
+	\item \cite{comparativesurveydeepactive}: Does not compare impact of different initial train set size and strategies on shallow classifiers.
+	
+	\item According to \cite{ueno_benchmarkingofquerystrategies}: \textcolor{red}{check if true:} Does not compare different sizes of the initial starting sets as well as how simple and more complex perform with the query methods
+	
+	\item \cite{werner_comparableactivelearning}: They focus on a wide range of domains, this paper only compares methods in the image domain. I compare strategies for a simple logistic regression model and a complex CNN across different starting sizes of the annotated dataset. \\
+\end{itemize}
+% TO HERE
 
 \bibliography{bibliography}
 \bibliographystyle{icml2023}

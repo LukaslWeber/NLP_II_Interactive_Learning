@@ -1,4 +1,4 @@
-\begin{thebibliography}{8}
+\begin{thebibliography}{9}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -33,6 +33,13 @@ Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel,
 \newblock Scikit-learn: Machine learning in {P}ython.
 \newblock \emph{Journal of Machine Learning Research}, 12:\penalty0 2825--2830,
   2011.
+
+\bibitem[Schröder \& Niekler(2020)Schröder and
+  Niekler]{schröder_surveyactivelearningtext}
+Schröder, C. and Niekler, A.
+\newblock A survey of active learning for text classification using deep neural
+  networks, 2020.
+\newblock URL \url{https://arxiv.org/abs/2008.07267}.
 
 \bibitem[Schröder et~al.(2022)Schröder, Niekler, and
   Potthast]{schröder_revisitinguncertaintybasedquerystrategies}
