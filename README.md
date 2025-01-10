@@ -5,7 +5,9 @@ This is the corresponding Repository to my project on Interactive Learning. It b
 ### Task 
 > Choose a subset of query strategies from the modal active learning library and compare how well they perform for a shallow classifier (e.g., logistic regression) trained on MNIST and optionally for a deep neural network (e.g., a CNN with few hidden layers) trained on a reasonable subset of CIFAR 10.
 
-
+---
+## Additional notes:
+- Technically both train scripts could be compressed into one but due to the sake of readability, they are separate!
 ---
 
 # Citations
@@ -51,13 +53,15 @@ This is the corresponding Repository to my project on Interactive Learning. It b
   - [x] Use confusion matrices for a class-wise error analysis.
   - [ ] Graph which points (how to show this in a graph) were added, which points had the most impact
   - [x] use TüPlots
+  - [ ] [Display misclassified images](https://towardsdatascience.com/logistic-regression-using-python-sklearn-numpy-mnist-handwriting-recognition-matplotlib-a6b31e2b166a)
 - [x] Check if all possible query strategies were used
 - [ ] Implement CNN and do the whole thing with a CNN instead of the shallow classifier
-- [ ] Rework citations
-  - [ ] MNIST
-  - [ ] CIFAR 
-  - [ ] Adapt Structure/ Looks
-- [ ] [Display misclassified images](https://towardsdatascience.com/logistic-regression-using-python-sklearn-numpy-mnist-handwriting-recognition-matplotlib-a6b31e2b166a)
+  - [x] load CIFAR
+  - [ ] Update n_initial parameter to set initial dataset size to something moderate
+  - [x] Define CNN
+  - [ ] Image processing: Zero-padding, stride, ...
+  - [x] Update training routine
+  - [ ] Shuffle datasets each iteration
 
 
 ---

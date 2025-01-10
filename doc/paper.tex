@@ -140,7 +140,7 @@ The effectiveness of active learning depends heavily on the chosen query strateg
 	\item Pool-based active learning: A model is trained on a small labeled dataset and used to evaluate a large pool of unlabeled data. The most informative samples are selected based on a query strategy, labeled by an oracle, and added to the training set. The model is retrained with the updated training set and the process is repeated until a stopping criterion is met.
 	\item Stream-based active learning: Here, unlabeled data arrives sequentially and the model decides whether to query the label of an incoming instance using an evaluation metric like the uncertainty of its prediction and checking whether a certain threshold is reached. If not, the instance is discarded.
 \end{enumerate}
-This report focuses on comparing several query strategies for both pool-based and stream-based active learning. Experiments in this paper leverage the modular Active Learning framework (modAL)~\cite{danka_modalmodularactivelearning}, which simplified the implementation of active learning pipelines, includes multiple pre-implemented query strategies and is compatible with models from the Scikit-learn library~\cite{scikit-learn}. \\
+This report focuses on comparing several query strategies for both pool-based and stream-based active learning. Experiments in this paper leverage the modular Active Learning framework (modAL)~\cite{danka_modalmodularactivelearning}, which simplified the implementation of active learning pipelines, includes multiple pre-implemented query strategies and is compatible with models from the Scikit-learn library~\cite{scikit-learn}. \textcolor{red}{CNN implemented with PyTorch(ADD CITATION) and transformed with skorch~\cite{skorch} to make it compatible with modAL as it is only compatible with sklearn models.} \\
 Several previous works have explored and compared different query methods across various domains. \\
 \cite{schröder_revisitinguncertaintybasedquerystrategies} compare various uncertainty-based query strategies in the context of fine-tuning transformer models in text classification tasks. \cite{zhan_comparativesurveydeepactive} on the other hand compares several query strategies on the image datasets MNIST and CIFAR. \\
 According to \cite{ueno_benchmarkingofquerystrategies} most papers concentrate on two image-based datasets: MNIST~\cite{mnist} and CIFAR~\cite{cifar}, while their paper evaluates strategies on six different datasets, including medical and visual inspection images. They also examine strategies independent of training processes to minimize biases from early-stage randomness or underfitting. This is shown in an experiment where fully trained models are used to select the most informative samples based on several different query strategies to construct a labeled dataset. \\ 
@@ -151,6 +151,7 @@ It is uncertain whether well working query strategies generalize well from simpl
 Furthermore, this report investigates the impact of the initial labeled dataset size, as its impact in combination with model complexity is rarely explored. 
 By examining scenarios with varying amounts of initial labeled data, this work simulates various real-world applications: (1) starting with no labeled data, (2) having a small pool of labeled data, and (3) working with a well-trained model to identify data points for fine-tuning.
 \\
+\\
 The contributions of this paper are as follows:
 \begin{itemize}
 	\item \textbf{Systematic evaluation of active learning query strategies} across different datasets and model complexities, using MNIST with logistic regression and CIFAR-10 with a CNN.
@@ -160,19 +161,26 @@ The contributions of this paper are as follows:
 Section~\ref{sec:methods} outlines the used datasets, processing steps and models. Section~\ref{sec:experiments} describes the experimental design, followed by the results and discussion in sections~\ref{sec:results} and~\ref{sec:discussion} respectively. The report concludes with key findings in section~\ref{sec:conclusion}
 
 \section{Methods}\label{sec:methods}
-\label{data_and_methods}
+Several different datasets are used in the following experiments.
 \subsection{Datasets}
-\begin{itemize}
-	\item MNIST and CIFAR describe
-	\item processing steps \\
-	MNIST: Vectorized, flattened (describe input size), normalized
-\end{itemize}
+MNIST is a dataset consisting of handwritten digits with 60.000 train samples and 10.000 test samples. Digits are size-normalized and centered in a $28 \times 28$ image~\cite{mnist}. Each digits belongs to one of 10 classes, corresponding from 0 to 9. \\
+Upon loading the dataset, each image is vectorized, i.e. transformed from a $28 \times 28$ sized image-matrix to a vector of length $784$. Furthermore, each pixel contains a grayscale-value from 0 to 255. Pixel values are normalized to a range between 0 and 1 to provide a value range that works well with logistic regression. 
+\\
+\textcolor{red}{Here describe the validation split}
+\\
+\\
+CIFAR-10 is a dataset which consists of 50.000 train- and 10.000 test-images. Each natural image belongs to one of 10 classes. Each class has exactly 5.000 train and 1.000 test images. The image-size is $32 \times 32$ pixels. 
+\textcolor{red}{CIFAR preprocessing split and validation split}
+\\
+\\
+Both used datasets are balanced, i.e. each class has roughly the same number of samples as any other class. 
 
 \subsection{Models}
 \begin{itemize}
 	\item Logistic Regression: Details on implementation and hyperparameters, how were they chosen?
-	\item same for CNN
+	\item same for CNN: CrossEntropyLoss (combines Log Softmax and NLLoss in one single class)
 \end{itemize}
+Are models re-initialized after each new data points and newly trained or fine-tuned?
 
 \subsection{Active Learning}
 \begin{itemize}
@@ -206,7 +214,7 @@ Qualitative analysis: Why certain strategies perform better or worse in specific
 Impact of initial dataset size
 \\
 \\
-Most methods require knowledge about the balance of the dataset and might be disadvantageous to use in case of a disbalanced dataset. In real world scenarios, this is not known. \\
+Most methods require knowledge about the balance of the dataset and might be disadvantageous to use in case of a disbalanced dataset. In real world scenarios, this is not known. Both used datasets are balanced so the impact of query strategies on imbalanced datasets was not tested. \\
 Only image-based datasets were tested. Not vector- or text-based. 
 
 \section{Conclusion}\label{sec:conclusion}

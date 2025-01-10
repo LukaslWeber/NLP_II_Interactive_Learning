@@ -1,4 +1,4 @@
-\begin{thebibliography}{9}
+\begin{thebibliography}{10}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -47,6 +47,13 @@ Schröder, C., Niekler, A., and Potthast, M.
 \newblock Revisiting uncertainty-based query strategies for active learning
   with transformers, 2022.
 \newblock URL \url{https://arxiv.org/abs/2107.05687}.
+
+\bibitem[Tietz et~al.(2017)Tietz, Fan, Nouri, Bossan, and {skorch
+  Developers}]{skorch}
+Tietz, M., Fan, T.~J., Nouri, D., Bossan, B., and {skorch Developers}.
+\newblock \emph{skorch: A scikit-learn compatible neural network library that
+  wraps PyTorch}, July 2017.
+\newblock URL \url{https://skorch.readthedocs.io/en/stable/}.
 
 \bibitem[Ueno et~al.(2023)Ueno, Yamada, Nakatsuka, and
   Kato]{ueno_benchmarkingofquerystrategies}

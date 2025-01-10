@@ -7,45 +7,45 @@ Warning--I didn't find a database entry for "comparableactivelearning"
 Warning--I didn't find a database entry for "comparativesurveydeepactive"
 Warning--empty journal in danka_modalmodularactivelearning
 Warning--empty journal in cifar
-You've used 9 entries,
+You've used 10 entries,
             2773 wiz_defined-function locations,
-            643 strings with 6660 characters,
-and the built_in function-call counts, 4716 in all, are:
-= -- 382
-> -- 404
+            648 strings with 6876 characters,
+and the built_in function-call counts, 5214 in all, are:
+= -- 422
+> -- 452
 < -- 3
-+ -- 135
-- -- 126
-* -- 414
-:= -- 755
-add.period$ -- 29
-call.type$ -- 9
-change.case$ -- 68
-chr.to.int$ -- 9
-cite$ -- 20
-duplicate$ -- 159
-empty$ -- 310
-format.name$ -- 140
-if$ -- 954
++ -- 151
+- -- 141
+* -- 464
+:= -- 837
+add.period$ -- 32
+call.type$ -- 10
+change.case$ -- 75
+chr.to.int$ -- 10
+cite$ -- 22
+duplicate$ -- 177
+empty$ -- 336
+format.name$ -- 156
+if$ -- 1050
 int.to.chr$ -- 1
 int.to.str$ -- 1
 missing$ -- 4
-newline$ -- 55
-num.names$ -- 36
-pop$ -- 148
+newline$ -- 60
+num.names$ -- 40
+pop$ -- 162
 preamble$ -- 1
-purify$ -- 59
+purify$ -- 66
 quote$ -- 0
-skip$ -- 161
+skip$ -- 177
 stack$ -- 0
-substring$ -- 76
-swap$ -- 7
+substring$ -- 78
+swap$ -- 10
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 99
+type$ -- 110
 warning$ -- 2
-while$ -- 30
+while$ -- 33
 width$ -- 0
-write$ -- 119
+write$ -- 131
 (There were 4 warnings)

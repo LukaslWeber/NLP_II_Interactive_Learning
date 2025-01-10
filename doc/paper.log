@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.1.10)  9 JAN 2025 22:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.1.10)  10 JAN 2025 12:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -906,50 +906,77 @@ Underfull \hbox (badness 1533) in paragraph at lines 129--130
 []\OT1/ptm/m/n/10 (+20) Experiments: Vary ini-tial dataset sizes
  []
 
+
+Underfull \hbox (badness 1009) in paragraph at lines 143--156
+\OT1/ptm/m/n/10 (+20) li-brary ([][]Pe-dregosa et al.[][], [][]2011[][]). []CNN
+ im-ple-mented
+ []
+
+
+Underfull \hbox (badness 1194) in paragraph at lines 143--156
+\OT1/ptm/m/n/10 (+20) Several pre-vi-ous works have ex-plored and com-pared
+ []
+
+
+Underfull \hbox (badness 1194) in paragraph at lines 143--156
+\OT1/ptm/m/n/10 (+20) of stan-dard-iza-tion in ex-per-i-men-tal se-tups, as no-
+ticed
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 143--156
+
+ []
+
 [1{c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
 
 ]
+Underfull \hbox (badness 10000) in paragraph at lines 166--177
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 166--177
+
+ []
+
 
 Package natbib Warning: Citation `comparableactivelearning' on page 2 undefined
- on input line 188.
+ on input line 196.
 
 
-Underfull \hbox (badness 1496) in paragraph at lines 186--192
+Underfull \hbox (badness 1496) in paragraph at lines 194--200
 \OT1/ptm/m/n/10 (+20) times in suc-ces-sion and check-ing whether the same
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 186--192
+Underfull \hbox (badness 10000) in paragraph at lines 194--200
+
+ []
+
+[2]
+Underfull \hbox (badness 10000) in paragraph at lines 210--218
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 202--210
+Underfull \hbox (badness 10000) in paragraph at lines 210--218
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 202--210
-
- []
-
-
-Underfull \hbox (badness 2057) in paragraph at lines 202--210
+Underfull \hbox (badness 2057) in paragraph at lines 210--218
 \OT1/ptm/m/n/10 (+20) Most meth-ods re-quire knowl-edge about the bal-ance
  []
 
 
-Underfull \vbox (badness 1902) has occurred while \output is active []
-
- [2]
-
 Package natbib Warning: Citation `comparativesurveydeepactive' on page 3 undefi
-ned on input line 236.
+ned on input line 244.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 240--241
+Underfull \hbox (badness 10000) in paragraph at lines 248--249
 
  []
 
@@ -963,7 +990,13 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `pcr' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
- [3])
+ [3]
+Underfull \hbox (badness 1721) in paragraph at lines 53--57
+\OT1/ptm/m/n/10 (+20) rch De-vel-op-ers.  \OT1/ptm/m/it/10 (+20) sko-rch: A sci
+kit-learn com-pat-i-
+ []
+
+)
 
 Package natbib Warning: There were undefined citations.
 
@@ -974,22 +1007,24 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 26571 strings out of 476093
- 494887 string characters out of 5795583
- 1874787 words of memory out of 5000000
- 46264 multiletter control sequences out of 15000+600000
- 541418 words of font info for 193 fonts, out of 8000000 for 9000
+ 26561 strings out of 476093
+ 494791 string characters out of 5795583
+ 1875787 words of memory out of 5000000
+ 46265 multiletter control sequences out of 15000+600000
+ 540945 words of font info for 185 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,11n,89p,1002b,642s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {c:/texlive/2022/texmf-dist/fonts/enc/dvips/base/8r.enc}<c:/texlive/2022/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb><c:/texlive/2022/texmf-dist/fon
-ts/type1/urw/courier/ucrr8a.pfb><c:/texlive/2022/texmf-dist/fonts/type1/urw/tim
-es/utmb8a.pfb><c:/texlive/2022/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/
-texlive/2022/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper.pdf (4 pages, 86864 bytes).
+ts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmsy10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/urw/courie
+r/ucrr8a.pfb><c:/texlive/2022/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/t
+exlive/2022/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2022/texmf-
+dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on paper.pdf (4 pages, 107868 bytes).
 PDF statistics:
- 129 PDF objects out of 1000 (max. 8388607)
- 111 compressed objects within 2 object streams
- 29 named destinations out of 1000 (max. 500000)
+ 147 PDF objects out of 1000 (max. 8388607)
+ 125 compressed objects within 2 object streams
+ 30 named destinations out of 1000 (max. 500000)
  48141 words of extra memory for PDF output out of 51595 (max. 10000000)
 
