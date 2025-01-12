@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.1.10)  10 JAN 2025 12:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.1.10)  12 JAN 2025 23:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -907,9 +907,14 @@ Underfull \hbox (badness 1533) in paragraph at lines 129--130
  []
 
 
-Underfull \hbox (badness 1009) in paragraph at lines 143--156
-\OT1/ptm/m/n/10 (+20) li-brary ([][]Pe-dregosa et al.[][], [][]2011[][]). []CNN
- im-ple-mented
+Underfull \hbox (badness 6526) in paragraph at lines 143--156
+\OT1/ptm/m/n/10 (+20) Learn-ing frame-work (modAL) ([][]Danka & Hor-vath[][],
+ []
+
+
+Underfull \hbox (badness 1147) in paragraph at lines 143--156
+\OT1/ptm/m/n/10 (+20) learn-ing pipelines, in-cludes mul-ti-ple pre-implemented
+
  []
 
 
@@ -933,50 +938,71 @@ Underfull \hbox (badness 10000) in paragraph at lines 143--156
 
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 166--177
+Underfull \hbox (badness 10000) in paragraph at lines 166--172
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 166--177
-
+Underfull \hbox (badness 10000) in paragraph at lines 187--193
+\OT1/ptm/m/n/10 (+20) where $\OML/cmm/m/it/10 N$ \OT1/ptm/m/n/10 (+20) is the n
+um-ber of sam-ples, and
  []
 
 
-Package natbib Warning: Citation `comparableactivelearning' on page 2 undefined
- on input line 196.
-
-
-Underfull \hbox (badness 1496) in paragraph at lines 194--200
-\OT1/ptm/m/n/10 (+20) times in suc-ces-sion and check-ing whether the same
+Underfull \hbox (badness 10000) in paragraph at lines 187--193
+\OML/cmm/m/it/10 y[]$ \OT1/ptm/m/n/10 (+20) in-di-cates if sam-ple $\OML/cmm/m/
+it/10 n$ \OT1/ptm/m/n/10 (+20) be-longs to class
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 194--200
+Underfull \hbox (badness 10000) in paragraph at lines 187--193
+\OML/cmm/m/it/10 i$\OT1/ptm/m/n/10 (+20) . []Should I also ex-plain Cross-Entro
+py loss?
+ []
+
+
+Overfull \hbox (160.4958pt too wide) in paragraph at lines 187--193
+[][]$[] 
+ []
+
+
+Underfull \hbox (badness 1430) in paragraph at lines 187--193
+\OT1/ptm/m/n/10 (+20) it-er-a-tion of 500, is used for ef-fi-cient gradient-bas
+ed
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 187--193
 
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 210--218
+Underfull \hbox (badness 10000) in paragraph at lines 228--231
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 210--218
+Underfull \hbox (badness 10000) in paragraph at lines 249--257
 
  []
 
 
-Underfull \hbox (badness 2057) in paragraph at lines 210--218
+Underfull \hbox (badness 10000) in paragraph at lines 249--257
+
+ []
+
+
+Underfull \hbox (badness 2057) in paragraph at lines 249--257
 \OT1/ptm/m/n/10 (+20) Most meth-ods re-quire knowl-edge about the bal-ance
  []
 
+[3]
 
-Package natbib Warning: Citation `comparativesurveydeepactive' on page 3 undefi
-ned on input line 244.
+Package natbib Warning: Citation `comparativesurveydeepactive' on page 4 undefi
+ned on input line 285.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 248--249
+Underfull \hbox (badness 10000) in paragraph at lines 289--290
 
  []
 
@@ -990,7 +1016,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `pcr' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
- [3]
+ [4]
 Underfull \hbox (badness 1721) in paragraph at lines 53--57
 \OT1/ptm/m/n/10 (+20) rch De-vel-op-ers.  \OT1/ptm/m/it/10 (+20) sko-rch: A sci
 kit-learn com-pat-i-
@@ -1000,31 +1026,35 @@ kit-learn com-pat-i-
 
 Package natbib Warning: There were undefined citations.
 
-[4
+[5
 
 ] (./paper.aux)
 Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 26561 strings out of 476093
- 494791 string characters out of 5795583
- 1875787 words of memory out of 5000000
- 46265 multiletter control sequences out of 15000+600000
- 540945 words of font info for 185 fonts, out of 8000000 for 9000
+ 26587 strings out of 476093
+ 495056 string characters out of 5795583
+ 1874787 words of memory out of 5000000
+ 46268 multiletter control sequences out of 15000+600000
+ 542153 words of font info for 198 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,11n,89p,1002b,642s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {c:/texlive/2022/texmf-dist/fonts/enc/dvips/base/8r.enc}<c:/texlive/2022/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb><c:/texlive/2022/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmsy10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/urw/courie
-r/ucrr8a.pfb><c:/texlive/2022/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/t
-exlive/2022/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2022/texmf-
-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper.pdf (4 pages, 107868 bytes).
+f-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2022/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2022/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmmi5.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmmi7.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmmi9.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb>
+<c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texlive
+/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2022/tex
+mf-dist/fonts/type1/urw/courier/ucrr8a.pfb><c:/texlive/2022/texmf-dist/fonts/ty
+pe1/urw/times/utmb8a.pfb><c:/texlive/2022/texmf-dist/fonts/type1/urw/times/utmr
+8a.pfb><c:/texlive/2022/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on paper.pdf (5 pages, 165557 bytes).
 PDF statistics:
- 147 PDF objects out of 1000 (max. 8388607)
- 125 compressed objects within 2 object streams
- 30 named destinations out of 1000 (max. 500000)
- 48141 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 183 PDF objects out of 1000 (max. 8388607)
+ 150 compressed objects within 2 object streams
+ 34 named destinations out of 1000 (max. 500000)
+ 50189 words of extra memory for PDF output out of 51595 (max. 10000000)
 

@@ -5,6 +5,7 @@ from sklearn.linear_model import LogisticRegression
 import numpy as np
 import tensorflow as tf
 import torch
+from sklearn.model_selection import train_test_split
 from skorch import NeuralNetClassifier
 from torch import nn
 from cnn_model import CNN
@@ -21,7 +22,7 @@ def initialize_random_number_generators(seed):
     torch.backends.cudnn.benchmark = False  # Ensure reproducibility
 
 
-def load_MNIST():
+def load_MNIST(random_seed, validation_split=0.2):
     mnist = fetch_openml('mnist_784', version=1, parser="auto")
 
     X, y = mnist.data.to_numpy(), mnist.target.to_numpy()
@@ -31,10 +32,15 @@ def load_MNIST():
     # Convert type of y (aka the label) from string to integer
     y = y.astype(int)
 
-    X_train, y_train = X[:60000], y[:60000]
+    X_train_full, y_train_full = X[:60000], y[:60000] # This is the default way of extracting train and test data
     X_test, y_test = X[60000:], y[60000:]
 
-    return X_train, y_train, X_test, y_test, X, y
+    # Create validation split
+    X_train, X_val, y_train, y_val = train_test_split(
+        X_train_full, y_train_full, test_size=validation_split, random_state=random_seed
+    )
+
+    return X_train, y_train, X_test, y_test, X_val, y_val, X, y
 
 
 def load_CIFAR():
@@ -97,7 +103,7 @@ def log_metrics(step: int, model, X_train, y_train, X_test, y_test, metrics: dic
     return
 
 
-def create_log_reg_model(model_params, random_seed):
+def create_log_reg_model(model_params, random_seed, device="cpu"):
     return LogisticRegression(solver='sag',
                               penalty=model_params["regularization"],
                               C=model_params["regularization_strength"],
@@ -110,11 +116,6 @@ def create_log_reg_model(model_params, random_seed):
 def create_cnn_model(model_params, random_seed, device="cpu"):
     initialize_random_number_generators(random_seed)
     cnn = CNN(model_params)
-    optimizer = torch.optim.Adam(
-        cnn.parameters(),
-        lr=model_params["learning_rate"],
-        weight_decay=model_params["weight_decay"]
-    )
     return NeuralNetClassifier(cnn,
                criterion=nn.CrossEntropyLoss, # don't i need to use another loss?
                optimizer=torch.optim.Adam,  # Pass the optimizer class, not an instance
@@ -122,7 +123,8 @@ def create_cnn_model(model_params, random_seed, device="cpu"):
                optimizer__weight_decay=model_params["weight_decay"],
                train_split=None,  # this disables an internal validation split
                verbose=0,
-               device=device)
+               device=device,
+               warm_start=True)
 
 
 def save_model_and_metrics(experiment: str, dataset_name: str, name: str, model, metrics: dict):

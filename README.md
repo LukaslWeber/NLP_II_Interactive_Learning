@@ -8,6 +8,10 @@ This is the corresponding Repository to my project on Interactive Learning. It b
 ---
 ## Additional notes:
 - Technically both train scripts could be compressed into one but due to the sake of readability, they are separate!
+- Upon installing the environment, a file has to be changed because modAL does not work with the numpy version that it recommends: The modAL expected_error_reduction 
+  - Change "p_subsample: np.float = 1.0" to "p_subsample: float = 1.0"
+  - Change "if loss is 'binary': nloss = _proba_uncertainty(refitted_proba) elif loss is 'log': nloss = _proba_entropy(refitted_proba)" to "if loss == 'binary': nloss = _proba_uncertainty(refitted_proba) elif loss == 'log': nloss = _proba_entropy(refitted_proba)"
+  
 ---
 
 # Citations
@@ -62,6 +66,10 @@ This is the corresponding Repository to my project on Interactive Learning. It b
   - [ ] Image processing: Zero-padding, stride, ...
   - [x] Update training routine
   - [ ] Shuffle datasets each iteration
+  - [ ] initialization of weights
+  - [ ] check if neuralnet has a max_iter
+  - [ ] [train in batches](https://skorch.readthedocs.io/en/stable/user/FAQ.html#how-do-i-shuffle-my-train-batches
+  - [ ] update the n_itiial dataset sizes
 
 
 ---

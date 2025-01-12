@@ -140,7 +140,7 @@ The effectiveness of active learning depends heavily on the chosen query strateg
 	\item Pool-based active learning: A model is trained on a small labeled dataset and used to evaluate a large pool of unlabeled data. The most informative samples are selected based on a query strategy, labeled by an oracle, and added to the training set. The model is retrained with the updated training set and the process is repeated until a stopping criterion is met.
 	\item Stream-based active learning: Here, unlabeled data arrives sequentially and the model decides whether to query the label of an incoming instance using an evaluation metric like the uncertainty of its prediction and checking whether a certain threshold is reached. If not, the instance is discarded.
 \end{enumerate}
-This report focuses on comparing several query strategies for both pool-based and stream-based active learning. Experiments in this paper leverage the modular Active Learning framework (modAL)~\cite{danka_modalmodularactivelearning}, which simplified the implementation of active learning pipelines, includes multiple pre-implemented query strategies and is compatible with models from the Scikit-learn library~\cite{scikit-learn}. \textcolor{red}{CNN implemented with PyTorch(ADD CITATION) and transformed with skorch~\cite{skorch} to make it compatible with modAL as it is only compatible with sklearn models.} \\
+This report focuses on comparing several query strategies for both pool-based and stream-based active learning. Experiments in this paper leverage the modular Active Learning framework (modAL)~\cite{danka_modalmodularactivelearning}, which simplified the implementation of active learning pipelines, includes multiple pre-implemented query strategies and is compatible with models from the Scikit-learn library~\cite{scikit-learn}. \textcolor{red}{Convolutional Neural Netowrk (CNN) implemented with PyTorch(ADD CITATION) and transformed with skorch~\cite{skorch} to make it compatible with modAL as it is only compatible with sklearn models.} \\
 Several previous works have explored and compared different query methods across various domains. \\
 \cite{schröder_revisitinguncertaintybasedquerystrategies} compare various uncertainty-based query strategies in the context of fine-tuning transformer models in text classification tasks. \cite{zhan_comparativesurveydeepactive} on the other hand compares several query strategies on the image datasets MNIST and CIFAR. \\
 According to \cite{ueno_benchmarkingofquerystrategies} most papers concentrate on two image-based datasets: MNIST~\cite{mnist} and CIFAR~\cite{cifar}, while their paper evaluates strategies on six different datasets, including medical and visual inspection images. They also examine strategies independent of training processes to minimize biases from early-stage randomness or underfitting. This is shown in an experiment where fully trained models are used to select the most informative samples based on several different query strategies to construct a labeled dataset. \\ 
@@ -164,40 +164,78 @@ Section~\ref{sec:methods} outlines the used datasets, processing steps and model
 Several different datasets are used in the following experiments.
 \subsection{Datasets}
 MNIST is a dataset consisting of handwritten digits with 60.000 train samples and 10.000 test samples. Digits are size-normalized and centered in a $28 \times 28$ image~\cite{mnist}. Each digits belongs to one of 10 classes, corresponding from 0 to 9. \\
-Upon loading the dataset, each image is vectorized, i.e. transformed from a $28 \times 28$ sized image-matrix to a vector of length $784$. Furthermore, each pixel contains a grayscale-value from 0 to 255. Pixel values are normalized to a range between 0 and 1 to provide a value range that works well with logistic regression. 
-\\
-\textcolor{red}{Here describe the validation split}
+Upon loading the dataset, each image is vectorized, i.e. transformed from a $28 \times 28$ sized image-matrix to a vector of length $784$. Furthermore, each pixel contains a grayscale-value from 0 to 255. Pixel values are normalized to a range between 0 and 1 to provide a value range that works well with logistic regression.
 \\
 \\
 CIFAR-10 is a dataset which consists of 50.000 train- and 10.000 test-images. Each natural image belongs to one of 10 classes. Each class has exactly 5.000 train and 1.000 test images. The image-size is $32 \times 32$ pixels. 
-\textcolor{red}{CIFAR preprocessing split and validation split}
-\\
-\\
-Both used datasets are balanced, i.e. each class has roughly the same number of samples as any other class. 
+\textcolor{red}{CIFAR preprocessing split}. CIFAR-10 includes real-world images and is thus expected to be more complicated to learn.
 
-\subsection{Models}
-\begin{itemize}
-	\item Logistic Regression: Details on implementation and hyperparameters, how were they chosen?
-	\item same for CNN: CrossEntropyLoss (combines Log Softmax and NLLoss in one single class)
-\end{itemize}
-Are models re-initialized after each new data points and newly trained or fine-tuned?
+Both used datasets are balanced, i.e. each class has roughly the same number of samples as any other class. Furthermore, 20\% of both train sets are used for 5-fold-cross-validation, resulting in a test set size of $48.000$ train images for MNIST and $40.000$ train images for CIFAR.
+
+\subsection{Multinomial Logistic Regression Model}
+Sklearn's LogisticRegression module is used to predict digits on MNIST. Multinomial logistic regression predicts a probability for each class instead of a single probability as in Binomial logistic regression.
+\\
+The model estimates the probability $P(y=i \mid X)$ of a sample belonging to class $i$ using the SoftMax function:
+\begin{align}
+	P(y=i \mid X)=\frac{\exp \left(X \beta_i\right)}{\sum_{j=1}^k \exp \left(X \beta_j\right)}
+\end{align}
+where $\beta_i$ are the coefficients for class $i$. The SoftMax function ensures that probabilities across classes sum to 1.
+
+The model maximizes the likelihood of the observed data:
+\begin{align}
+	\mathcal{L}(\beta)=\prod_{n=1}^N \prod_{i=1}^k\left(P\left(y_n=i \mid X_n\right)\right)^{y_{n i}}
+\end{align}
+where $N$ is the number of samples, and $y_{n i}$ indicates if sample $n$ belongs to class $i$. \textcolor{red}{Should I also explain Cross-Entropy loss? $\begin{aligned}
+		&\text { For a multinomial logistic regression model with } k \text { classes, the cross-entropy loss } \mathcal{L} \text { is defined as: }\\
+		&\mathcal{L}=-\frac{1}{N} \sum_{n=1}^N \sum_{j=1}^k y_{n j} \log \left(P\left(y=j \mid X_n\right)\right)
+\end{aligned}$}\\
+Regularization using the $\ell_2$-norm prevents overfitting with a strength $C=0.01$. The lbfgs-solver, with a maximum iteration of 500, is used for efficient gradient-based optimization. Early-stopping with a tolerance of 0.001 is used. \\
+
+\subsection{Convolutional Neural Network}
+The model which is used to learn the classes in CIFAR-10 is a CNN. It comprises of two convolutional layers followed by three fully connected layers. \\
+The first convolutional layer processes the input image with 3 input and $l1\_channels$ output channels, followed by a ReLU activation. The second convolutional layer further processes the output from the first layer with $l1\_channels$ input and $l2\_channels$ output channels, applying ReLU activation, max pooling, and dropout for regularization.
+\\
+The output from the convolutional layers is flattened and passed through three fully connected layers. The first two fully connected layers are followed by ReLU activations and dropout for regularization. The first fully connected layer has an output size of $l4_input$ and the second layer has an output size of $l5_input$ neurons. The final output layer has 10 neurons, corresponding to the number of classes in the CIFAR dataset.
+\\
+The model is implemented using PyTorch\textcolor{red}{cite} and skorch~\cite{skorch} is used to make it possible to use it with Sklearn, allowing integration with the modAL active learning framework.
+\\
+\textcolor{red}{Early stopping?}
+\\
+During training, PyTorch's CrossEntropyLoss is used. 
 
 \subsection{Active Learning}
 \begin{itemize}
-	\item How are the splits (initial pool, initial training data) generated
-	\item numbmer of iterations for active learning
-	\item Used active learning query strategies
+	\item During active learning with pool-based query strategies in the case of logistic regression, 5 instances are queried at a time for 250 iterations resulting in a labeled pool which is increased by $1.250$ samples. \\
+	When training the CNN, 250 instances are chosen for 50 iterations. This enlarges the labeled pool by $12.500$ samples. \\
+	In stream-based methods, the number of queries is adapted to match the given numbers and guarantee that the labeled dataset size is the same as in the pool based methods. 
+	\item Used active learning query strategies include pool- and stream-based methods. The pool based methods include uncertainty sampling, uncertainty margin sampling and uncertainty entropy sampling. Stream-based active learning is done with uncertainty as the evaluation metric deciding whether to use samples or not. Additionally, random sampling was used to serve as a reference point.  
+	\textcolor{red}{maybe explain the query strategies more in detail}
+	\item After querying instances and retraining, models are not re-initialized but rather fine-tuned. 
 \end{itemize}
 
-Metrics for evaluation (Accuracy, train error, confusion matrix, ...)
-
 \section{Experiments}\label{sec:experiments}
-Setup: details for reproducibility (random number generators)?
-Random seed = 42
-\cite{comparableactivelearning} mention reproducibility problems in models even when setting random number generators before each run. By training models multiple times in succession and checking whether the same configurations lead to different outcomes, it is shown that in this scenario, reproducibility is guaranteed. \textcolor{red}{TODO: Schnell ein skript aufsetzen und dann finale accuracy und so weiter vergleichen.}
+Several experiments are conducted with the two model-dataset combinations to research different scenarios for which active learning can be used.
+\begin{itemize}
+	\item Experiment 1: Starts with a minimal amount of data. In both cases these are 10 samples.
+	\item Experiment 2: Starts with $15\%$ of the train dataset. 
+	\item Experiment 3: Starts with $80\%$ of the train dataset.
+\end{itemize}
+In experiment 1, a random sample is chosen for each class in the datasets. \\
+In each experiment, the random samples 
+
+For reproducibility purposes, the same random seed $42$ was used to initialize all random number generators and model weights to ensure that same configurations lead to the same outcomes, even when training models in succession. 
+
+For each query method one model is trained. (I did not perform multiple runs)
+Before starting the active learning process, each model is pre-trained using the samples in the initial labeled dataset for \textcolor{red}{X epochs}. In the case of pool-based query methods, 5 samples are queried for 250 iterations when training with samples from MNIST and 250 samples are queried for 50 iterations when training with instances from CIFAR. 
 \\
-Did I perform multiple runs?
-\\
+\begin{itemize}
+	\item Batch size for CNN is 128.
+	\item Evaluation metrics. Metrics for evaluation (Accuracy, train error, confusion matrix, ...)
+	\item How are the splits (initial pool, initial training data) generated
+	\item initial labeled pool sizes
+\end{itemize}
+	
+	
 
 Scenarios
 \begin{itemize}
@@ -216,6 +254,8 @@ Impact of initial dataset size
 \\
 Most methods require knowledge about the balance of the dataset and might be disadvantageous to use in case of a disbalanced dataset. In real world scenarios, this is not known. Both used datasets are balanced so the impact of query strategies on imbalanced datasets was not tested. \\
 Only image-based datasets were tested. Not vector- or text-based. 
+
+Only one network is trained for each query method. This could be improved upon when training multiple models.
 
 \section{Conclusion}\label{sec:conclusion}
 Summary of findings and insights (maybe that a strategy works best with small datasets while another one is robust on bigger ones)
