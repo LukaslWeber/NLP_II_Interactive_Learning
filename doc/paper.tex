@@ -217,8 +217,8 @@ During training, PyTorch's CrossEntropyLoss is used.
 Several experiments are conducted with the two model-dataset combinations to research different scenarios for which active learning can be used.
 \begin{itemize}
 	\item Experiment 1: Starts with a minimal amount of data. In both cases these are 10 samples.
-	\item Experiment 2: Starts with $15\%$ of the train dataset. 
-	\item Experiment 3: Starts with $80\%$ of the train dataset.
+	\item Experiment 2: Starts with $10\%$ of the train dataset, resulting in $4800$ initial samples for MNIST and $4000$ \textcolor{red}{überprüfen} for CIFAR.
+	\item Experiment 3: Starts with $50\%$ of the train dataset. Thus, $24.000$ labeled instances are chosen for MNIST and $20.000$ for CIFAR. \textcolor{red}{überprüfen ob das sinn ergibt}
 \end{itemize}
 In experiment 1, a random sample is chosen for each class in the datasets. \\
 In each experiment, the random samples 
@@ -233,6 +233,7 @@ Before starting the active learning process, each model is pre-trained using the
 	\item Evaluation metrics. Metrics for evaluation (Accuracy, train error, confusion matrix, ...)
 	\item How are the splits (initial pool, initial training data) generated
 	\item initial labeled pool sizes
+	\item stream based: if 10.000 instances are pooled but none are accepted, training is finished early.
 \end{itemize}
 	
 	

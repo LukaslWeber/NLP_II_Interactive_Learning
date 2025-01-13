@@ -1,4 +1,8 @@
 import os, random, pickle
+import time
+
+from modAL import ActiveLearner
+from modAL.uncertainty import classifier_margin
 from sklearn.datasets import fetch_openml
 from sklearn.metrics import accuracy_score, log_loss
 from sklearn.linear_model import LogisticRegression
@@ -158,3 +162,162 @@ def load_file(path: str):
         loaded_dictionary = pickle.load(file)
 
     return loaded_dictionary
+
+
+# Training scripts:
+""" 
+    Method for pool-based active learning query strategies. 
+"""
+
+
+def train_active_learner(model_params, query_strat, n_query_instances: int, epochs: int, random_seed: int,
+                         datasets, create_model, device="cpu"):
+    initialize_random_number_generators(seed=random_seed)
+
+    dataset_name = datasets['dataset_name']
+    X_initial, y_initial = datasets['X_initial'], datasets['y_initial']
+    X_train, y_train = datasets['X_train'], datasets['y_train']
+    X_test, y_test = datasets['X_test'], datasets['y_test']
+    pool_idx = datasets['pool_idx']
+    X_pool, y_pool = X_train[pool_idx], y_train[pool_idx]
+
+    is_cnn = (dataset_name == "CIFAR")
+
+    model = create_model(model_params, random_seed=random_seed, device=device)
+
+    learner = ActiveLearner(estimator=model,
+                            query_strategy=query_strat,
+                            X_training=X_initial,
+                            y_training=y_initial)
+
+    # Passing X_training and y_training to the ActiveLearner automatically calls the fit method for log_reg with these data points
+
+    metrics = {'queries': [], 'train_loss': [], 'train_loss_current': [], 'test_loss': [], 'test_acc': []}
+
+    start = time.time()
+    for epoch in range(epochs):  # epochs=n_queries to have both models trained on the same number of overall epochs
+        query_idx, query_inst = learner.query(X_pool, n_instances=n_query_instances)
+
+        # Simulate labeling
+        learner.teach(X_pool[query_idx], y_pool[query_idx], only_new=False)
+
+        # Remove queried point(s)
+        X_pool, y_pool = np.delete(X_pool, query_idx, axis=0), np.delete(y_pool, query_idx, axis=0)
+
+        metrics['queries'].append(query_idx)
+        # log_metrics logs train loss for the whole train dataset which doesn't reflect the actual value in the current step but gives the ability to compare both models on the training set.
+        # To log training state on the actual (current) training set, do this additionally
+        if is_cnn:
+            criterion = torch.nn.CrossEntropyLoss()
+            learner.estimator.module_.eval()  # Put the model into evaluation mode
+
+            with torch.no_grad():  # Disable gradient computation for efficiency
+                X_training_tensor = torch.tensor(learner.X_training, dtype=torch.float32, device=device)
+                curr_train_logits = learner.estimator.forward(X_training_tensor)
+                curr_train_y_tensor = torch.tensor(learner.y_training, dtype=torch.long, device=device)
+                train_loss_current = criterion(curr_train_logits,
+                                               curr_train_y_tensor).item()
+
+            learner.estimator.module_.train()  # Restore training mode
+
+        else:
+            train_loss_current = log_loss(learner.y_training, learner.predict_proba(learner.X_training))
+        metrics['train_loss_current'].append(train_loss_current)
+
+        log_metrics(epoch + 1, learner, X_train, y_train, X_test, y_test, metrics, is_cnn=is_cnn, device=device)
+        print(f"       Current train loss: {train_loss_current:.4f}    number of train samples: {len(learner.X_training)}")
+    print(f"Training time: {time.time() - start:.2f} seconds")
+
+    return learner.estimator, metrics
+
+
+""" 
+    Method for stream-based active learning query strategies. 
+
+    arguments:
+    - model_params: dict
+    - query_strat: dict
+    - query_score_threshold: float
+    - epochs: int
+    - random_seed: int
+    - X_stream: np.ndarray, typically full dataset
+    - y_stream: np.ndarray, typically full dataset
+    - X_initial: np.ndarray, initial training points
+    - y_initial: np.ndarray, initial training points
+"""
+
+
+def train_active_learner_stream(model_params, query_score_fn, n_query_instances: int, query_score_threshold: float,
+                                epochs: int, random_seed: int, datasets, create_model, device="cpu"):
+    initialize_random_number_generators(seed=random_seed)
+
+    X_stream, y_stream = datasets['X_train'].copy(), datasets['y_train'].copy()
+    X_initial, y_initial = datasets['X_initial'], datasets['y_initial']
+    X_train, y_train = datasets['X_train'], datasets['y_train']
+    X_test, y_test = datasets['X_test'], datasets['y_test']
+
+    model = create_model(model_params, random_seed=random_seed, device=device)
+
+    learner = ActiveLearner(estimator=model,
+                            X_training=X_initial,
+                            y_training=y_initial)
+    # Passing X_training and y_training to the ActiveLearner automatically calls the fit method for log_reg with these data points
+
+    metrics = {'queries': [], 'train_loss': [], 'train_loss_current': [], 'test_loss': [], 'test_acc': []}
+
+    start = time.time()
+
+    # In pool based training, I get n_query_instances in each epoch. To have a comparable amount of data points for retraining the classifier, I use max_instances which equates to the amount of instances, a model in pool based approaches has seen.
+    max_instances = n_query_instances * epochs
+    used_instances = 0
+
+    # Prevent infinite looping in case that no sample fulfills the query condition
+    retry_count, max_retries = 0, 10000
+
+    # Use a random permutation of the whole train data set to mimic a data stream.
+    stream_indices, stream_pointer = np.random.permutation(len(X_stream)), 0
+
+    while used_instances < max_instances:
+        if stream_pointer >= len(
+                stream_indices):  # Restart stream simulation if the loop went through the whole list of data points
+            stream_indices = np.random.permutation(len(X_stream))
+            stream_pointer = 0
+
+        stream_idx = stream_indices[stream_pointer]
+        x_instance, y_instance = X_stream[stream_idx].reshape(1, -1), y_stream[stream_idx].reshape(-1, )
+        stream_pointer += 1
+        retry_count += 1
+
+        print((X_train == X_stream).all())
+
+        query_score = query_score_fn(learner, x_instance)
+
+        # Depending on the function, we want to select samples with either a high score (uncertainty) or a low score (margin)
+
+        if query_score_fn == classifier_margin:
+            query_condition = query_score < query_score_threshold
+        else:  # classifier_uncertainty, classifier_entropy
+            query_condition = query_score > query_score_threshold
+
+        if query_condition:
+            learner.teach(x_instance, y_instance)
+
+            metrics['queries'].append(stream_idx)
+            # log_metrics logs train loss for the whole train dataset which doesn't reflect the actual value in the current step but gives the ability to compare both models on the training set.
+            # To log training state on the actual (current) training set, do this additionally
+            train_loss_current = log_loss(learner.y_training, learner.predict_proba(learner.X_training))
+            metrics['train_loss_current'].append(train_loss_current)
+
+            log_metrics((used_instances + 1), learner, X_train, y_train, X_test, y_test, metrics)
+            print(f"       Current train loss: {train_loss_current:.4f}")
+
+            used_instances += 1
+            retry_count = 0
+
+        if retry_count > max_retries:
+            print(f"No suitable example could be found after {max_retries} retries, so training is stopped early.")
+            break
+
+    print(f"Training time: {time.time() - start:.2f} seconds")
+
+    return learner.estimator, metrics
