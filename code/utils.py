@@ -104,11 +104,12 @@ def log_metrics(step: int, model, X_train, y_train, X_test, y_test, metrics: dic
 
 
 def create_log_reg_model(model_params, random_seed, device="cpu"):
-    return LogisticRegression(solver='sag',
+    return LogisticRegression(solver=model_params['solver'],
                               penalty=model_params["regularization"],
                               C=model_params["regularization_strength"],
                               multi_class='multinomial',
                               max_iter=model_params["max_iterations_per_epoch"],
+                              tol=model_params["early_stopping_tol"],
                               warm_start=True,
                               random_state=random_seed)
 
