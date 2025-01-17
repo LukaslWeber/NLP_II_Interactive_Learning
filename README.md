@@ -70,6 +70,7 @@ This is the corresponding Repository to my project on Interactive Learning. It b
   - [ ] check if neuralnet has a max_iter
   - [ ] [train in batches](https://skorch.readthedocs.io/en/stable/user/FAQ.html#how-do-i-shuffle-my-train-batches
   - [ ] update the n_itiial dataset sizes
+  - [ ] update tol parameter
 
 
 ---

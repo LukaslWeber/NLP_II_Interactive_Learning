@@ -36,7 +36,7 @@ def load_MNIST(random_seed, validation_split=0.2):
     # Convert type of y (aka the label) from string to integer
     y = y.astype(int)
 
-    X_train_full, y_train_full = X[:60000], y[:60000] # This is the default way of extracting train and test data
+    X_train_full, y_train_full = X[:60000], y[:60000]  # This is the default way of extracting train and test data
     X_test, y_test = X[60000:], y[60000:]
 
     # Create validation split
@@ -120,16 +120,16 @@ def create_log_reg_model(model_params, random_seed, device="cpu"):
 
 def create_cnn_model(model_params, random_seed, device="cpu"):
     initialize_random_number_generators(random_seed)
-    cnn = CNN(model_params)
+    cnn = CNN(**model_params)
     return NeuralNetClassifier(cnn,
-               criterion=nn.CrossEntropyLoss, # don't i need to use another loss?
-               optimizer=torch.optim.Adam,  # Pass the optimizer class, not an instance
-               optimizer__lr=model_params["learning_rate"],  # Set learning rate
-               optimizer__weight_decay=model_params["weight_decay"],
-               train_split=None,  # this disables an internal validation split
-               verbose=0,
-               device=device,
-               warm_start=True)
+                               criterion=nn.CrossEntropyLoss,  # don't i need to use another loss?
+                               optimizer=torch.optim.Adam,  # Pass the optimizer class, not an instance
+                               optimizer__lr=model_params["learning_rate"],  # Set learning rate
+                               optimizer__weight_decay=model_params["weight_decay"],
+                               train_split=None,  # this disables an internal validation split
+                               verbose=0,
+                               device=device,
+                               warm_start=True)
 
 
 def save_model_and_metrics(experiment: str, dataset_name: str, name: str, model, metrics: dict):
@@ -225,7 +225,8 @@ def train_active_learner(model_params, query_strat, n_query_instances: int, epoc
         metrics['train_loss_current'].append(train_loss_current)
 
         log_metrics(epoch + 1, learner, X_train, y_train, X_test, y_test, metrics, is_cnn=is_cnn, device=device)
-        print(f"       Current train loss: {train_loss_current:.4f}    number of train samples: {len(learner.X_training)}")
+        print(
+            f"       Current train loss: {train_loss_current:.4f}    number of train samples: {len(learner.X_training)}")
     print(f"Training time: {time.time() - start:.2f} seconds")
 
     return learner.estimator, metrics
