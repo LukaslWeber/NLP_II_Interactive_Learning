@@ -3,49 +3,48 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: paper.aux
 The style file: icml2023.bst
 Database file #1: bibliography.bib
-Warning--I didn't find a database entry for "comparableactivelearning"
 Warning--I didn't find a database entry for "comparativesurveydeepactive"
 Warning--empty journal in danka_modalmodularactivelearning
 Warning--empty journal in cifar
-You've used 10 entries,
+You've used 9 entries,
             2773 wiz_defined-function locations,
-            648 strings with 6876 characters,
-and the built_in function-call counts, 5214 in all, are:
-= -- 422
-> -- 452
-< -- 3
-+ -- 151
-- -- 141
-* -- 464
-:= -- 837
+            647 strings with 6767 characters,
+and the built_in function-call counts, 4986 in all, are:
+= -- 408
+> -- 431
+< -- 2
++ -- 144
+- -- 135
+* -- 451
+:= -- 804
 add.period$ -- 32
-call.type$ -- 10
-change.case$ -- 75
-chr.to.int$ -- 10
-cite$ -- 22
-duplicate$ -- 177
-empty$ -- 336
-format.name$ -- 156
-if$ -- 1050
+call.type$ -- 9
+change.case$ -- 71
+chr.to.int$ -- 9
+cite$ -- 20
+duplicate$ -- 165
+empty$ -- 318
+format.name$ -- 147
+if$ -- 1006
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 4
-newline$ -- 60
-num.names$ -- 40
-pop$ -- 162
+missing$ -- 5
+newline$ -- 58
+num.names$ -- 36
+pop$ -- 147
 preamble$ -- 1
-purify$ -- 66
+purify$ -- 62
 quote$ -- 0
-skip$ -- 177
+skip$ -- 161
 stack$ -- 0
-substring$ -- 78
-swap$ -- 10
+substring$ -- 97
+swap$ -- 7
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 110
+type$ -- 99
 warning$ -- 2
-while$ -- 33
+while$ -- 31
 width$ -- 0
-write$ -- 131
-(There were 4 warnings)
+write$ -- 126
+(There were 3 warnings)

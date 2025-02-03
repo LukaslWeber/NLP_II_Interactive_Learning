@@ -1,9 +1,19 @@
-\begin{thebibliography}{10}
+\begin{thebibliography}{9}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Cardoso et~al.(2017)Cardoso, Silva, Canuto, Moro, and
+  Gonçalves]{ranked_batch_mode_query_strategy}
+Cardoso, T.~N., Silva, R.~M., Canuto, S., Moro, M.~M., and Gonçalves, M.~A.
+\newblock Ranked batch-mode active learning.
+\newblock \emph{Information Sciences}, 379:\penalty0 313--337, 2017.
+\newblock ISSN 0020-0255.
+\newblock \doi{https://doi.org/10.1016/j.ins.2016.10.037}.
+\newblock URL
+  \url{https://www.sciencedirect.com/science/article/pii/S0020025516313949}.
 
 \bibitem[Danka \& Horvath(2018)Danka and
   Horvath]{danka_modalmodularactivelearning}
@@ -34,26 +44,12 @@ Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel,
 \newblock \emph{Journal of Machine Learning Research}, 12:\penalty0 2825--2830,
   2011.
 
-\bibitem[Schröder \& Niekler(2020)Schröder and
-  Niekler]{schröder_surveyactivelearningtext}
-Schröder, C. and Niekler, A.
-\newblock A survey of active learning for text classification using deep neural
-  networks, 2020.
-\newblock URL \url{https://arxiv.org/abs/2008.07267}.
-
 \bibitem[Schröder et~al.(2022)Schröder, Niekler, and
   Potthast]{schröder_revisitinguncertaintybasedquerystrategies}
 Schröder, C., Niekler, A., and Potthast, M.
 \newblock Revisiting uncertainty-based query strategies for active learning
   with transformers, 2022.
 \newblock URL \url{https://arxiv.org/abs/2107.05687}.
-
-\bibitem[Tietz et~al.(2017)Tietz, Fan, Nouri, Bossan, and {skorch
-  Developers}]{skorch}
-Tietz, M., Fan, T.~J., Nouri, D., Bossan, B., and {skorch Developers}.
-\newblock \emph{skorch: A scikit-learn compatible neural network library that
-  wraps PyTorch}, July 2017.
-\newblock URL \url{https://skorch.readthedocs.io/en/stable/}.
 
 \bibitem[Ueno et~al.(2023)Ueno, Yamada, Nakatsuka, and
   Kato]{ueno_benchmarkingofquerystrategies}
