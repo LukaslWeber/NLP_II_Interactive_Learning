@@ -15,10 +15,25 @@ from skorch.callbacks import GradientNormClipping
 from torch import nn
 from cnn_model import CNN
 
-is_cnn=False
-device="cpu"
+is_cnn = False
+device = "cpu"
+
 
 def initialize_random_number_generators(seed):
+    """
+    Initializes random number generators for NumPy, Python's random module, and PyTorch
+    to ensure reproducibility.
+
+    Args:
+        seed (int): The seed value to initialize the random number generators.
+
+    Notes:
+        - Sets the seed for NumPy's random number generator.
+        - Sets the seed for Python's built-in random module.
+        - Sets the seed for PyTorch's random number generator (both CPU and CUDA).
+        - deterministic behavior in PyTorch by setting `torch.backends.cudnn.deterministic = True`.
+        - Disables CuDNN benchmarking (`torch.backends.cudnn.benchmark = False`)
+    """
     np.random.seed(seed)
     random.seed(seed)
     # Cuda should not be used but I found it hard to produce reproducible results with
@@ -30,6 +45,27 @@ def initialize_random_number_generators(seed):
 
 
 def load_MNIST(random_seed, validation_split=0.2):
+    """
+    Loads the MNIST dataset from OpenML, normalizes the pixel values, and optionally splits
+    the training data into training and validation sets.
+
+    Args:
+        random_seed (int): The seed for random number generation to ensure reproducibility
+                           when splitting the dataset.
+        validation_split (float, optional): The proportion of the training data to be used
+                                            as validation data. Defaults to 0.2.
+
+    Returns:
+        tuple: A tuple containing:
+            - X_train (numpy.ndarray): Training set features.
+            - y_train (numpy.ndarray): Training set labels.
+            - X_test (numpy.ndarray): Test set features.
+            - y_test (numpy.ndarray): Test set labels.
+            - X_val (numpy.ndarray): Validation set features (empty if validation_split=0.0).
+            - y_val (numpy.ndarray): Validation set labels (empty if validation_split=0.0).
+            - X (numpy.ndarray): Full dataset features.
+            - y (numpy.ndarray): Full dataset labels.
+    """
     mnist = fetch_openml('mnist_784', version=1, parser="auto")
 
     X, y = mnist.data.to_numpy(), mnist.target.to_numpy()
@@ -55,9 +91,24 @@ def load_MNIST(random_seed, validation_split=0.2):
     return X_train, y_train, X_test, y_test, X_val, y_val, X, y
 
 
-
-
 def log_metrics(step: int, learner, X_train, y_train, X_test, y_test, metrics: dict, is_cnn=False, device="cpu"):
+    """
+        Logs training and test metrics for a given learner and updates the provided metrics dictionary.
+
+        Args:
+            step (int): The current iteration or training step.
+            learner: The model used for training and evaluation, supporting `predict_proba` and `predict`.
+            X_train (numpy.ndarray): Training data features.
+            y_train (numpy.ndarray): Training data labels.
+            X_test (numpy.ndarray): Test data features.
+            y_test (numpy.ndarray): Test data labels.
+            metrics (dict): Dictionary storing lists of logged metrics ('train_loss', 'test_loss', 'test_acc').
+            is_cnn (bool, optional): Whether the learner is a CNN model requiring `argmax` for predictions. Defaults to False.
+            device (str, optional): The computing device ('cpu' or 'cuda'). Defaults to 'cpu'.
+
+        Returns:
+            None
+    """
     train_loss = compute_loss(y_hat=learner.predict_proba(X_train), y_data=y_train)
     test_logits = learner.predict_proba(X_test)
     test_loss = compute_loss(y_hat=test_logits, y_data=y_test)
@@ -77,7 +128,17 @@ def log_metrics(step: int, learner, X_train, y_train, X_test, y_test, metrics: d
     return
 
 
+########## Utility methods regarding models ##########
 def create_log_reg_model(model_params, random_seed, device="cpu"):
+    """
+    Creates a Logistic Regression model
+
+    :param model_params:
+    :param random_seed:
+    :param device:
+    Returns:
+        Logistic Regression model
+    """
     return LogisticRegression(solver=model_params['solver'],
                               penalty=model_params["regularization"],
                               C=model_params["regularization_strength"],
@@ -88,10 +149,18 @@ def create_log_reg_model(model_params, random_seed, device="cpu"):
                               random_state=random_seed)
 
 
-
-
-
 def save_model_and_metrics(experiment: str, dataset_name: str, name: str, model, metrics: dict, base_path=None):
+    """
+    Saves model and the training metrics dictionary
+
+    :param experiment:
+    :param dataset_name:
+    :param name:
+    :param model:
+    :param metrics:
+    :param base_path:
+    :return:
+    """
     if base_path is None:
         base_path = os.path.join("../results", dataset_name, f"exp{experiment}")
 
@@ -103,6 +172,17 @@ def save_model_and_metrics(experiment: str, dataset_name: str, name: str, model,
 
 
 def load_model_and_metrics(experiment: str, dataset_name: str, name: str, base_path=None):
+    """
+    Loads model and training metrics dictionary
+
+    :param experiment:
+    :param dataset_name:
+    :param name:
+    :param base_path:
+    :return:
+        model,
+        metrics
+    """
     if base_path is None:
         base_path = os.path.join("../results", dataset_name, f"exp{experiment}")
 
@@ -125,27 +205,7 @@ def load_file(path: str):
     return loaded_dictionary
 
 
-# Training scripts:
-""" 
-    Method for pool-based active learning query strategies. 
-"""
-
-
-def extract_datasets_from_dict(datasets):
-    dataset_name = datasets['dataset_name']
-    X_initial, y_initial = datasets['X_initial'], datasets['y_initial']
-    X_train, y_train = datasets['X_train'], datasets['y_train']
-    X_val, y_val = datasets['X_val'], datasets['y_val']
-    X_test, y_test = datasets['X_test'], datasets['y_test']
-    pool_idx = datasets['pool_idx']
-    X_pool, y_pool = X_train[pool_idx], y_train[pool_idx]
-    return (dataset_name,
-            (X_initial, y_initial),
-            (X_train, y_train),
-            (X_test, y_test),
-            (X_val, y_val),
-            pool_idx, (X_pool, y_pool))
-
+########## Training scripts ##########
 def random_sampling(classifier, X_pool, n_instances):
     n_samples = len(X_pool)
     query_idx = np.random.choice(range(n_samples), size=n_instances, replace=False)
@@ -169,6 +229,22 @@ def ranked_uc_and_dv_query(learner, X, n_instances=1):
     return selected_indices, selected_instances
 
 
+def extract_datasets_from_dict(datasets):
+    dataset_name = datasets['dataset_name']
+    X_initial, y_initial = datasets['X_initial'], datasets['y_initial']
+    X_train, y_train = datasets['X_train'], datasets['y_train']
+    X_val, y_val = datasets['X_val'], datasets['y_val']
+    X_test, y_test = datasets['X_test'], datasets['y_test']
+    pool_idx = datasets['pool_idx']
+    X_pool, y_pool = X_train[pool_idx], y_train[pool_idx]
+    return (dataset_name,
+            (X_initial, y_initial),
+            (X_train, y_train),
+            (X_test, y_test),
+            (X_val, y_val),
+            pool_idx, (X_pool, y_pool))
+
+
 def compute_loss(y_hat, y_data):
     if is_cnn:
         criterion = torch.nn.CrossEntropyLoss().to(device)
@@ -178,6 +254,7 @@ def compute_loss(y_hat, y_data):
         loss = log_loss(y_data, y_hat)
     return loss
 
+
 def change_max_epochs(learner, new_max):
     if is_cnn:
         print(learner.estimator.get_params()['max_epochs'])
@@ -186,8 +263,24 @@ def change_max_epochs(learner, new_max):
     else:
         learner.estimator.set_params(max_iter=new_max)
 
+
 def train_active_learner(model_params, query_strat, n_query_instances: int, n_query_epochs: int, random_seed: int,
                          datasets, create_model, n_iter, patience, device="cpu"):
+    """
+    Method to train a pool-based active learner
+
+    :param model_params:
+    :param query_strat:
+    :param n_query_instances:
+    :param n_query_epochs:
+    :param random_seed:
+    :param datasets:
+    :param create_model:
+    :param n_iter:
+    :param patience:
+    :param device:
+    :return: model, training metrics
+    """
     device = device
     initialize_random_number_generators(seed=random_seed)
     # Dict to log metrics
@@ -212,7 +305,8 @@ def train_active_learner(model_params, query_strat, n_query_instances: int, n_qu
     change_max_epochs(learner, n_iter)
 
     start = time.time()
-    for epoch in range(n_query_epochs):  # epochs=n_queries to have both models trained on the same number of overall epochs
+    for epoch in range(
+            n_query_epochs):  # epochs=n_queries to have both models trained on the same number of overall epochs
         query_idx, query_inst = learner.query(X_pool, n_instances=n_query_instances)  # Query samples
         print(y_pool[query_idx])
         learner.teach(X_pool[query_idx], y_pool[query_idx], only_new=False)  # Simulate labeling
@@ -246,18 +340,34 @@ def change_max_committee_epochs(_committee, n_iter, is_cnn):
     for l in _committee.learner_list:
         if is_cnn:
             l.estimator.set_params(max_epochs=n_iter)
-
         else:
             l.estimator.set_params(max_iter=n_iter)
 
-def create_committee(n_learners, n_initial, X_initial, y_initial, create_model, model_params, query_strat, random_seed, device="cpu"):
+
+def create_committee(n_learners, n_initial, X_initial, y_initial, create_model, model_params, query_strat, random_seed,
+                     device="cpu"):
+    """
+    Creates a committee of models
+
+    :param n_learners:
+    :param n_initial:
+    :param X_initial:
+    :param y_initial:
+    :param create_model:
+    :param model_params:
+    :param query_strat:
+    :param random_seed:
+    :param device:
+    :return:
+    """
     learners_list = list()
     for member_idx in range(n_learners):
-        np.random.seed(random_seed+member_idx) # random_seed+member_idx is a robust way to always get the same subsets and starting points across query methods
+        np.random.seed(
+            random_seed + member_idx)  # random_seed+member_idx is a robust way to always get the same subsets and starting points across query methods
         _sample_idx = np.random.choice(n_initial, size=int(0.6 * n_initial), replace=False)
         _X_train = X_initial[_sample_idx]
         _y_train = y_initial[_sample_idx]
-        model = create_model(model_params, random_seed=random_seed+member_idx, device=device)
+        model = create_model(model_params, random_seed=random_seed + member_idx, device=device)
         # Passing X_training and y_training to the ActiveLearner automatically calls the fit method for log_reg with these data points
         learner = ActiveLearner(estimator=model,
                                 query_strategy=query_strat,
@@ -266,9 +376,25 @@ def create_committee(n_learners, n_initial, X_initial, y_initial, create_model, 
         learners_list.append(learner)
     return Committee(learner_list=learners_list, query_strategy=query_strat)
 
+
 def train_committee_learner(model_params, query_strat, n_query_instances: int, n_query_epochs: int, random_seed: int,
                             datasets, create_model, n_iter, n_learners, patience, device="cpu"):
-    print("test")
+    """
+    Trains a committee of models and logs metrics. Like train_active_learner but with a committee!
+
+    :param model_params:
+    :param query_strat:
+    :param n_query_instances:
+    :param n_query_epochs:
+    :param random_seed:
+    :param datasets:
+    :param create_model:
+    :param n_iter:
+    :param n_learners:
+    :param patience:
+    :param device:
+    :return: committee, metrics
+    """
     device = device
     initialize_random_number_generators(seed=random_seed)
     # Dict to log metrics
@@ -290,7 +416,8 @@ def train_committee_learner(model_params, query_strat, n_query_instances: int, n
     change_max_committee_epochs(_committee, n_iter, is_cnn)
 
     start = time.time()
-    for epoch in range(n_query_epochs):  # epochs=n_queries to have both models trained on the same number of overall epochs
+    for epoch in range(
+            n_query_epochs):  # epochs=n_queries to have both models trained on the same number of overall epochs
         query_idx, query_inst = _committee.query(X_pool, n_instances=n_query_instances)  # Query samples
         _committee.teach(X_pool[query_idx], y_pool[query_idx], only_new=False, bootstrap=False)
         X_pool, y_pool = (np.delete(X_pool, query_idx, axis=0),
@@ -319,12 +446,9 @@ def train_committee_learner(model_params, query_strat, n_query_instances: int, n
     return _committee, metrics
 
 
-
-
-
-
-### UNUSED METHODS THAT CAN BE USED FOR FURTHER EXPERIMENTS ###
-
+########## UNUSED METHODS THAT CAN BE USED FOR FURTHER EXPERIMENTS ##########
+### For instance, when a CNN should be tested ###
+### or stream-based active learning should be emulated ###
 def load_CIFAR(random_seed, validation_split=0.2):
     (X_train_full, y_train_full), (X_test, y_test) = tf.keras.datasets.cifar10.load_data()
 
@@ -354,6 +478,7 @@ def load_CIFAR(random_seed, validation_split=0.2):
 
     return X_train, y_train, X_test, y_test, X_val, y_val, X_whole, y_whole
 
+
 def create_cnn_model(model_params, random_seed, device="cpu"):
     par = model_params.copy()
     lr = par.pop("lr")
@@ -376,23 +501,22 @@ def create_cnn_model(model_params, random_seed, device="cpu"):
                                warm_start=True,
                                callbacks=[gradient_clipping])
 
-
-""" 
-    Method for stream-based active learning query strategies. 
-
-    arguments:
-    - model_params: dict
-    - query_strat: dict
-    - query_score_threshold: float
-    - epochs: int
-    - random_seed: int
-    - X_stream: np.ndarray, typically full dataset
-    - y_stream: np.ndarray, typically full dataset
-    - X_initial: np.ndarray, initial training points
-    - y_initial: np.ndarray, initial training points
-"""
 def train_active_learner_stream(model_params, query_score_fn, n_query_instances: int, query_score_threshold: float,
                                 epochs: int, random_seed: int, datasets, create_model, device="cpu"):
+    """
+        Method for stream-based active learning query strategies.
+
+        arguments:
+        - model_params: dict
+        - query_strat: dict
+        - query_score_threshold: float
+        - epochs: int
+        - random_seed: int
+        - X_stream: np.ndarray, typically full dataset
+        - y_stream: np.ndarray, typically full dataset
+        - X_initial: np.ndarray, initial training points
+        - y_initial: np.ndarray, initial training points
+    """
     initialize_random_number_generators(seed=random_seed)
 
     X_stream, y_stream = datasets['X_train'].copy(), datasets['y_train'].copy()
