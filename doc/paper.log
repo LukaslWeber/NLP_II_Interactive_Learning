@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.1.10)  3 FEB 2025 08:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.1.10)  3 FEB 2025 09:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -909,26 +909,26 @@ Underfull \hbox (badness 1931) in paragraph at lines 145--148
  []
 
 [2]
-Underfull \hbox (badness 1303) in paragraph at lines 204--207
+Underfull \hbox (badness 1303) in paragraph at lines 205--208
 \OT1/ptm/m/n/10 (+20) Ranked batch-mode Sam-pling ([][]Car-doso et al.[][], [][
 ]2017[][])
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 204--207
+Underfull \hbox (badness 10000) in paragraph at lines 205--208
 
  []
 
 <fig/test_accuracy.pdf, id=77, 411.70525pt x 173.61703pt>
 File: fig/test_accuracy.pdf Graphic file (type pdf)
 <use fig/test_accuracy.pdf>
-Package pdftex.def Info: fig/test_accuracy.pdf  used on input line 213.
+Package pdftex.def Info: fig/test_accuracy.pdf  used on input line 214.
 (pdftex.def)             Requested size: 463.42987pt x 195.43523pt.
 <fig/conf_mat_margin_sampling.pdf, id=78, 482.78336pt x 233.19511pt>
 File: fig/conf_mat_margin_sampling.pdf Graphic file (type pdf)
 <use fig/conf_mat_margin_sampling.pdf>
 Package pdftex.def Info: fig/conf_mat_margin_sampling.pdf  used on input line 2
-20.
+21.
 (pdftex.def)             Requested size: 463.42987pt x 223.84695pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -947,13 +947,13 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.241 
+l.242 
       
 pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.241 
+l.242 
        <./fig/test_accuracy.pdf> <./fig/conf_mat_margin_sampling.pdf>]
 (./paper.bbl
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 1
@@ -976,7 +976,7 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
 Here is how much of TeX's memory you used:
  26572 strings out of 476093
  495001 string characters out of 5795583
- 1872787 words of memory out of 5000000
+ 1873787 words of memory out of 5000000
  46243 multiletter control sequences out of 15000+600000
  539675 words of font info for 195 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -997,7 +997,7 @@ b><c:/texlive/2022/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2022
 /texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2022/texmf-dist/fonts/
 type1/urw/times/utmr8a.pfb><c:/texlive/2022/texmf-dist/fonts/type1/urw/times/ut
 mri8a.pfb>
-Output written on paper.pdf (5 pages, 357115 bytes).
+Output written on paper.pdf (5 pages, 357471 bytes).
 PDF statistics:
  226 PDF objects out of 1000 (max. 8388607)
  180 compressed objects within 2 object streams

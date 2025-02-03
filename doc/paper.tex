@@ -186,7 +186,8 @@ In pool-based active learning, an initial labeled dataset is required. When a si
 For both methods, models are trained for $init\_max\_iter=50$ epochs on the initial dataset. $init\_max\_iter$ is based on the hyperparameters found by 5-fold-cross-validation and ensures a sufficient fit to the datapoints. Thus, reducing the bias from early queried samples which were chosen when model predictions are inaccurate. \\
 After initial training, 5 samples are queried at a time for 1000 iterations, resulting in 5000 additional samples at the end of the learning process. After quering, the new samples are added to the training set and models are fine-tuned for $n_{iter}=20$ iterations. 
 \subsection{Query Strategies}
-A multitude of query strategies are used to compare a single model to an ensemble of models. As a control metric, Random Sampling is used to give a baseline for other query strategies.\\
+A multitude of uncertainty-based query strategies are used to compare a single model to an ensemble of models. Uncertainty-based methods are chosen because they prioritize samples the models are least confident about, making them an effective approach in active learning. They try to improve model performance with fewer labeled samples by focusing on unclear cases, which are particularly relevant in a setting where labeling is expensive. Additionally, they are computationally straightforward. \\
+As a control metric, Random Sampling is used to give a baseline for other query strategies. \\
 Uncertainty Sampling selects the least certain instances for labeling.
 \begin{align}
 	Uncertainty(\mathbf{x})=1-P_\theta(\hat{y} \mid \mathbf{x})
